@@ -21,9 +21,11 @@ struct dae::CommandList::Controller {
 };
 
 
-dae::CommandList::CommandList()
+dae::CommandList::CommandList(int userID)
 	: m_Controller(new Controller())
+	, m_UserNumber(userID)
 {
+	std::cout << "commandlist loaded" << std::endl;
 }
 
 dae::CommandList::~CommandList()
@@ -183,9 +185,12 @@ bool dae::CommandList::IsUp(ControllerButton button) const
 
 glm::vec2 dae::CommandList::GetControllerLeftThumbDirections() const
 {
-	return glm::vec2(
-		m_Controller.get()->m_State.Gamepad.sThumbLX,
-		m_Controller.get()->m_State.Gamepad.sThumbLY);
+	glm::vec2 temp(m_Controller.get()->m_State.Gamepad.sThumbLX, m_Controller.get()->m_State.Gamepad.sThumbLY);
+
+	if (abs(temp.x) < THUMBSTICKTHRESHHOLD) temp.x = 0;
+	if (abs(temp.y) < THUMBSTICKTHRESHHOLD) temp.y = 0;
+
+	return temp;
 }
 
 glm::vec2 dae::CommandList::GetControllerRightThumbDirections() const

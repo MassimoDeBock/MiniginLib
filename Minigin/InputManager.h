@@ -10,6 +10,12 @@ namespace dae
 	public:
 		InputManager();
 		~InputManager();
+
+		void Initialize();
+
+		void AddControllerInput(unsigned int userID, unsigned int inputID);
+		void AddKeyboardInput(unsigned int userID);
+
 		void AddCommandsToController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state, Command* command);
 		void SwapCommandsToController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state, Command* command);
 		void RemoveCommandsFromController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state);
@@ -24,7 +30,8 @@ namespace dae
 		glm::vec2 GetControllerSingularNormalizeLeftThumbDirections(unsigned int controllerNumber) const;	//	only has -1, 0 or 1 in 1 direction
 		glm::vec2 GetControllerSingularNormalizeRightThumbDirections(unsigned int controllerNumber) const;	//	only has -1, 0 or 1 in 1 direction
 		bool IsControllerNumberConnected(unsigned int controllerNumber) const;
-
+		
+		static const unsigned int m_MaxUserCount{ 4 };
 	private:
 
 

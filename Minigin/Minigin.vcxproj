@@ -239,6 +239,7 @@ xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(Outp
     <ClInclude Include="GameScoreBoardComponent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Input_API.h" />
+    <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="Locator.h" />
     <ClInclude Include="LoggedAudioProvider.h" />
     <ClInclude Include="MessageCommand.h" />
@@ -280,6 +281,7 @@ xcopy $(SolutionDir)3rdParty\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(Outp
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScoreBoardComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="KeyboardInput.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="LoggedAudioProvider.cpp" />
     <ClCompile Include="Main.cpp" />

@@ -9,16 +9,13 @@ namespace dae {
 	class CommandList
 	{
 	public:
-		CommandList();
+		CommandList(int userID);
 		~CommandList();
 
 		void CheckConnection();
 		void SetUserNumber(unsigned int num);
 
-		void CheckPressedCommand();
-		void CheckDownCommand();
-		void CheckReleasedCommand();
-		void CheckUpCommand();
+
 
 		void ProcessInput();
 		void HandleInput();
@@ -56,6 +53,11 @@ namespace dae {
 	private:
 		struct Controller;
 		std::unique_ptr<Controller> m_Controller;
+
+		void CheckPressedCommand();
+		void CheckDownCommand();
+		void CheckReleasedCommand();
+		void CheckUpCommand();
 
 		int m_UserNumber{};
 		std::unordered_map<ControllerButton, Command*> m_PressedCommands;

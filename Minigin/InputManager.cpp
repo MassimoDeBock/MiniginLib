@@ -8,47 +8,38 @@
 #include <Xinput.h>
 #include "CommandList.h"
 #include <vector>
+#include "Input_API.h"
+#include "ControllerInput.h"
+#include "KeyboardInput.h"
+#include <unordered_map>
 
 struct dae::InputManager::Impl
 {
 	dae::InputManager::Impl()
 	{
-		for (unsigned int i = 0; i < XUSER_MAX_COUNT; ++i) {
-			commandList.push_back(new CommandList());
-			commandList.at(i)->SetUserNumber(i);
-		}
 	}
-	
+
 	~Impl() {
-		for (auto it = std::begin(commandList); it != std::end(commandList); ++it) {
-			delete* it;
+		for (auto it : inputList) {
+			delete it.second;
 		}
 	}
-	std::vector<CommandList*> commandList;
+	//std::vector<Input_API*> inputList;
+	std::unordered_map<int, Input_API*> inputList;
 };
-
-
 
 void dae::InputManager::AddCommandsToController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state, Command* command)
 {
-	switch (state)
-	{
-	case dae::ButtonStates::Pressed:
-		pimpl->commandList.at(controllerNumber)->AddPressedCommand(buttonID, command);
-		break;
-	case dae::ButtonStates::Down:
-		pimpl->commandList.at(controllerNumber)->AddDownCommand(buttonID, command);
-		break;
-	case dae::ButtonStates::Released:
-		pimpl->commandList.at(controllerNumber)->AddReleasedCommand(buttonID, command);
-		break;
-	case dae::ButtonStates::Up:
-		pimpl->commandList.at(controllerNumber)->AddUpCommand(buttonID, command);
-		break;
-	default:
-		break;
+	auto search= pimpl->inputList.find(controllerNumber);
+	if (search == pimpl->inputList.end()) {
+		std::cout << "tried to add a command to a non existing controller, forgot to initialize it?" << std::endl;
+		return;
 	}
-
+	ControllerInput* ctrlInput = dynamic_cast<ControllerInput*>(pimpl->inputList.find(controllerNumber)->second);
+	if (ctrlInput == nullptr) {
+		std::cout << "tried to add a command to a non existing controller, forgot to initialize it?" << std::endl;
+	}
+	ctrlInput->AddCommandsToController(buttonID, state, command);
 }
 
 void dae::InputManager::SwapCommandsToController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state, Command* command)
@@ -59,42 +50,54 @@ void dae::InputManager::SwapCommandsToController(unsigned int controllerNumber, 
 
 void dae::InputManager::RemoveCommandsFromController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state)
 {
-	switch (state)
-	{
-	case dae::ButtonStates::Pressed:
-		pimpl->commandList.at(controllerNumber)->RemovePressedCommand(buttonID);
-		break;
-	case dae::ButtonStates::Down:
-		pimpl->commandList.at(controllerNumber)->RemoveDownCommand(buttonID);
-		break;
-	case dae::ButtonStates::Released:
-		pimpl->commandList.at(controllerNumber)->RemoveReleasedCommand(buttonID);
-		break;
-	case dae::ButtonStates::Up:
-		pimpl->commandList.at(controllerNumber)->RemoveUpCommand(buttonID);
-		break;
-	default:
-		break;
+	if (nullptr == pimpl->inputList.at(controllerNumber)) {
+		std::cout << "tried to remove a command to a non existing controller, forgot to initialize it?" << std::endl;
+		return;
 	}
+	ControllerInput* ctrlInput = dynamic_cast<ControllerInput*>(pimpl->inputList.find(controllerNumber)->second);
+	if (ctrlInput == nullptr) {
+		std::cout << "tried to remove a command to a non existing controller, forgot to initialize it?" << std::endl;
+	}
+	ctrlInput->RemoveCommandsFromController(buttonID, state);
 }
+
 
 
 dae::InputManager::InputManager()
 	: pimpl(new Impl())
-{}
+{
+	std::cout << "loadInputManager" << std::endl;
+}
 
 dae::InputManager::~InputManager()
 {
 }
 
+void dae::InputManager::Initialize()
+{
+	pimpl = std::make_unique<Impl>(Impl());
+}
+
+void dae::InputManager::AddControllerInput(unsigned int userID, unsigned int inputID)
+{
+	if (inputID >= m_MaxUserCount) return;
+	if (userID >= m_MaxUserCount) return;
+	pimpl->inputList.insert(std::pair<int, Input_API*>(userID,new ControllerInput(inputID)));
+}
+
+void dae::InputManager::AddKeyboardInput(unsigned int userID)
+{
+	if (userID >= m_MaxUserCount) return;
+	pimpl->inputList.insert(std::pair<int, Input_API*>(userID, new KeyboardInput()));
+	//pimpl->inputList.insert(std::pair<int, Input_API*>(inputID, new ControllerInput(inputID)));
+}
 
 
 bool dae::InputManager::ProcessInput()
-{	
-	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++) {
-		pimpl->commandList.at(i)->ProcessInput();
-	}
+{
+
 	SDL_Event e;
+	SDL_PeepEvents
 	while (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) {
 			return false;
@@ -105,6 +108,9 @@ bool dae::InputManager::ProcessInput()
 
 		}
 	}
+	for (auto& itController : pimpl->inputList) {
+		itController.second->ProcessInput();
+	}
 	HandleInput();
 
 	return true;
@@ -112,52 +118,79 @@ bool dae::InputManager::ProcessInput()
 
 bool dae::InputManager::HandleInput()
 {
-	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++) {
-		pimpl->commandList.at(i)->HandleInput();
-
+	for (auto& itController : pimpl->inputList) {
+		itController.second->HandleInput();
 	}
 	return true;
 }
 
 void dae::InputManager::CheckConnections()
 {
-	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++) {
+	for (auto& itController : pimpl->inputList) {
 		// Simply get the state of the controller from XInput.
-		pimpl->commandList.at(i)->CheckConnection();
+		itController.second->CheckConnection();
 	}
 }
 
 glm::vec2 dae::InputManager::GetControllerLeftThumbDirections(unsigned int controllerNumber) const
 {
-	return pimpl->commandList.at(controllerNumber)->GetControllerLeftThumbDirections();
+	auto search = pimpl->inputList.find(controllerNumber);
+	if (search == pimpl->inputList.end()) {
+		return glm::vec2(0, 0);
+	}
+	return search->second->GetControllerLeftThumbDirections();
 }
 
 glm::vec2 dae::InputManager::GetControllerRightThumbDirections(unsigned int controllerNumber) const
 {
-	return pimpl->commandList.at(controllerNumber)->GetControllerRightThumbDirections();
+	auto search = pimpl->inputList.find(controllerNumber);
+	if (search == pimpl->inputList.end()) {
+		return glm::vec2(0, 0);
+	}
+	return search->second->GetControllerRightThumbDirections();
 }
 
 glm::vec2 dae::InputManager::GetControllerNormalizedLeftThumbDirections(unsigned int controllerNumber) const
 {
-	return pimpl->commandList.at(controllerNumber)->GetControllerNormalizedLeftThumbDirections();
+	auto search = pimpl->inputList.find(controllerNumber);
+	if (search == pimpl->inputList.end()) {
+		return glm::vec2(0, 0);
+	}
+	return search->second->GetControllerNormalizedLeftThumbDirections();
 }
 
 glm::vec2 dae::InputManager::GetControllerNormalizedRightThumbDirections(unsigned int controllerNumber) const
 {
-	return pimpl->commandList.at(controllerNumber)->GetControllerNormalizedRightThumbDirections();
+	auto search = pimpl->inputList.find(controllerNumber);
+	if (search == pimpl->inputList.end()) {
+		return glm::vec2(0, 0);
+	}
+	return search->second->GetControllerNormalizedRightThumbDirections();
 }
 
 glm::vec2 dae::InputManager::GetControllerSingularNormalizeLeftThumbDirections(unsigned int controllerNumber) const
 {
-	return pimpl->commandList.at(controllerNumber)->GetControllerSingularNormalizeLeftThumbDirections();
+	auto search = pimpl->inputList.find(controllerNumber);
+	if (search == pimpl->inputList.end()) {
+		return glm::vec2(0, 0);
+	}
+	return search->second->GetControllerSingularNormalizeLeftThumbDirections();
 }
 
 glm::vec2 dae::InputManager::GetControllerSingularNormalizeRightThumbDirections(unsigned int controllerNumber) const
 {
-	return pimpl->commandList.at(controllerNumber)->GetControllerSingularNormalizeRightThumbDirections();
+	auto search = pimpl->inputList.find(controllerNumber);
+	if (search == pimpl->inputList.end()) {
+		return glm::vec2(0, 0);
+	}
+	return search->second->GetControllerSingularNormalizeRightThumbDirections();
 }
 
 bool dae::InputManager::IsControllerNumberConnected(unsigned int controllerNumber) const
 {
-	return pimpl->commandList.at(controllerNumber)->IsConnected();
+	auto search = pimpl->inputList.find(controllerNumber);
+	if (search == pimpl->inputList.end()) {
+		return false;
+	}
+	return search->second->IsConnected();
 }

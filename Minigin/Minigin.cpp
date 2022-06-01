@@ -61,6 +61,7 @@ void dae::Minigin::Initialize()
 
 	Renderer::GetInstance().Init(m_Window);
 	Locator::Initialize();
+	InputManager::GetInstance().Initialize();
 	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 8, 4096);
 }
 
@@ -70,6 +71,12 @@ void dae::Minigin::Initialize()
 void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
+
+	{
+		auto& input = InputManager::GetInstance();
+		input.AddKeyboardInput(0);
+		input.AddControllerInput(1,0);
+	}
 
 	{
 		Audio_API* service = new AudioProvider();
@@ -136,8 +143,8 @@ void dae::Minigin::LoadGame() const
 	go->SetRelativeTransform(0, 40);
 
 	{
-		auto& input = InputManager::GetInstance();
-		input.AddCommandsToController(0, ControllerButton::A, ButtonStates::Down, new MessageCommand(std::string("oo")));
+	//	auto& input = InputManager::GetInstance();
+		//input.AddCommandsToController(0, ControllerButton::A, ButtonStates::Down, new MessageCommand(std::string("oo")));
 	}
 }
 
