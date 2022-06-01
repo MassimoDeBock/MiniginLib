@@ -24,13 +24,12 @@ struct dae::InputManager::Impl
 			delete it.second;
 		}
 	}
-	//std::vector<Input_API*> inputList;
 	std::unordered_map<int, Input_API*> inputList;
 };
 
 void dae::InputManager::AddCommandsToController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state, Command* command)
 {
-	auto search= pimpl->inputList.find(controllerNumber);
+	auto search = pimpl->inputList.find(controllerNumber);
 	if (search == pimpl->inputList.end()) {
 		std::cout << "tried to add a command to a non existing controller, forgot to initialize it?" << std::endl;
 		return;
@@ -82,7 +81,7 @@ void dae::InputManager::AddControllerInput(unsigned int userID, unsigned int inp
 {
 	if (inputID >= m_MaxUserCount) return;
 	if (userID >= m_MaxUserCount) return;
-	pimpl->inputList.insert(std::pair<int, Input_API*>(userID,new ControllerInput(inputID)));
+	pimpl->inputList.insert(std::pair<int, Input_API*>(userID, new ControllerInput(inputID)));
 }
 
 void dae::InputManager::AddKeyboardInput(unsigned int userID)
@@ -97,15 +96,20 @@ bool dae::InputManager::ProcessInput()
 {
 
 	SDL_Event e;
-	SDL_PeepEvents
 	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
+		switch (e.type)
+		{
+		case SDL_QUIT:
 			return false;
+		case SDL_KEYUP:
+		{
+			if (e.key.keysym.sym == SDLK_ESCAPE) {
+				return false;
+			}
+			break;
 		}
-		if (e.type == SDL_KEYDOWN) {
-		}
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
-
+		default:
+			break;
 		}
 	}
 	for (auto& itController : pimpl->inputList) {

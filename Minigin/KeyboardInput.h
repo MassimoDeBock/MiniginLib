@@ -16,9 +16,9 @@ namespace dae {
 		virtual bool IsConnected()const { return true; };
 
 		/// <summary> Tip: the order of keys is like wasd or: (up,left,down,right) </summary>
-		void setFakeLJoystick(SDL_Keycode positiveY, SDL_Keycode negativeX, SDL_Keycode negativeY, SDL_Keycode positiveX);
+		void setFakeLJoystick(SDL_Scancode positiveY, SDL_Scancode negativeX, SDL_Scancode negativeY, SDL_Scancode positiveX);
 		/// <summary> Tip: the order of keys is like wasd or: (up,left,down,right) </summary>
-		void setFakeRJoystick(SDL_Keycode positiveY, SDL_Keycode negativeX, SDL_Keycode negativeY, SDL_Keycode positiveX);
+		void setFakeRJoystick(SDL_Scancode positiveY, SDL_Scancode negativeX, SDL_Scancode negativeY, SDL_Scancode positiveX);
 
 		virtual glm::vec2 GetControllerLeftThumbDirections() const;
 		virtual glm::vec2 GetControllerRightThumbDirections() const;

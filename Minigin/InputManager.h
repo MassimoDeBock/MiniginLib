@@ -32,6 +32,7 @@ namespace dae
 		bool IsControllerNumberConnected(unsigned int controllerNumber) const;
 		
 		static const unsigned int m_MaxUserCount{ 4 };
+
 	private:
 
 
