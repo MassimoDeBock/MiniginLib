@@ -26,6 +26,11 @@ dae::ImagePart::ImagePart(const std::string& filename, int x, int y, int w, int 
 {
 }
 
+void dae::ImagePart::flipImg()
+{
+	m_Texture.get()->GetSDLTexture();
+}
+
 void dae::ImagePart::SetTexture(const std::string& filename)
 {
 	m_Texture = ResourceManager::GetInstance().LoadTexture(filename);

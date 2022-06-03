@@ -13,24 +13,32 @@ int dae::SpriteGroup::GetSpritesAmount()
 	return int(m_MapOfSprites.size());
 }
 
-void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, const SDL_Rect& snipRect)
+void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, const SDL_Rect& snipRect, bool mirror)
 {
 	if (!m_MapOfSprites.contains(index)) {
-		m_MapOfSprites.insert(std::pair<int, std::shared_ptr<ImagePart>>(index, std::make_shared<ImagePart>(filename, snipRect)));
+		std::shared_ptr<ImagePart> imgpart;
+		if (mirror) {
+			//imgpart = std::make_shared<ImagePart>(filename, SDL_Rect(snipRect.x+ snipRect.w,snipRect.y+ snipRect.h, -snipRect.w, -snipRect.h));
+			imgpart = std::make_shared<ImagePart>(filename, snipRect);
+		}
+		else {
+			imgpart = std::make_shared<ImagePart>(filename, snipRect);
+		}
+		m_MapOfSprites.insert(std::pair<int, std::shared_ptr<ImagePart>>(index, imgpart));
 	}
 }
 
-void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, const glm::vec4& snipRect)
+void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, const glm::vec4& snipRect, bool mirror)
 {
-	InsertSprite(index, filename, SDL_Rect(int(snipRect.x), int(snipRect.y), int(snipRect.z), int(snipRect.w)));
+	InsertSprite(index, filename, SDL_Rect(int(snipRect.x), int(snipRect.y), int(snipRect.z), int(snipRect.w)), mirror);
 }
 
-void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, float x, float y, float w, float h)
+void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, float x, float y, float w, float h, bool mirror)
 {
-	InsertSprite(index, filename, SDL_Rect(int(x), int(y), int(w), int(h)));
+	InsertSprite(index, filename, SDL_Rect(int(x), int(y), int(w), int(h)), mirror);
 }
 
-void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, int x, int y, int w, int h)
+void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, int x, int y, int w, int h, bool mirror)
 {
-	InsertSprite(index, filename, SDL_Rect(x, y, w, h));
+	InsertSprite(index, filename, SDL_Rect(x, y, w, h), mirror);
 }

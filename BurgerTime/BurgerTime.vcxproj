@@ -163,11 +163,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasePlayerController.cpp" />
     <ClCompile Include="BurgerTime.cpp" />
+    <ClCompile Include="DeathBox.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameScoreBoardComponent.cpp" />
+    <ClCompile Include="PeterPepperBrainComponent.cpp" />
+    <ClCompile Include="PeterPepperPlayerController.cpp" />
+    <ClCompile Include="PointsPickup.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasePlayerController.h" />
+    <ClInclude Include="DeathBox.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameScoreBoardComponent.h" />
+    <ClInclude Include="PeterPepperBrainComponent.h" />
+    <ClInclude Include="PeterPepperPlayerController.h" />
+    <ClInclude Include="PointsPickup.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

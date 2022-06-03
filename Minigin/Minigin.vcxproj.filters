@@ -126,25 +126,7 @@
     <ClInclude Include="LoggedAudioProvider.h">
       <Filter>Header Files\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="BasePlayerController.h">
-      <Filter>Header Files\Custom</Filter>
-    </ClInclude>
-    <ClInclude Include="DeathBox.h">
-      <Filter>Header Files\Custom</Filter>
-    </ClInclude>
     <ClInclude Include="FPSComponent.h">
-      <Filter>Header Files\Custom</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScoreBoardComponent.h">
-      <Filter>Header Files\Custom</Filter>
-    </ClInclude>
-    <ClInclude Include="PeterPepperBrainComponent.h">
-      <Filter>Header Files\Custom</Filter>
-    </ClInclude>
-    <ClInclude Include="PeterPepperPlayerController.h">
-      <Filter>Header Files\Custom</Filter>
-    </ClInclude>
-    <ClInclude Include="PointsPickup.h">
       <Filter>Header Files\Custom</Filter>
     </ClInclude>
     <ClInclude Include="CommandList.h">
@@ -236,27 +218,6 @@
     <ClCompile Include="MovementComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="FPSComponent.cpp">
-      <Filter>Source Files\Custom</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScoreBoardComponent.cpp">
-      <Filter>Source Files\Custom</Filter>
-    </ClCompile>
-    <ClCompile Include="BasePlayerController.cpp">
-      <Filter>Source Files\Custom</Filter>
-    </ClCompile>
-    <ClCompile Include="DeathBox.cpp">
-      <Filter>Source Files\Custom</Filter>
-    </ClCompile>
-    <ClCompile Include="PeterPepperBrainComponent.cpp">
-      <Filter>Source Files\Custom</Filter>
-    </ClCompile>
-    <ClCompile Include="PeterPepperPlayerController.cpp">
-      <Filter>Source Files\Custom</Filter>
-    </ClCompile>
-    <ClCompile Include="PointsPickup.cpp">
-      <Filter>Source Files\Custom</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
@@ -294,6 +255,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SpriteGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

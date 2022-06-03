@@ -12,6 +12,7 @@ namespace dae {
 		ImagePart(const std::string& filename, float x, float y,	float w,	float h);
 		ImagePart(const std::string& filename, int x,	int y,		int w,		int h);
 
+		void flipImg();
 		void SetTexture(const std::string& filename);
 		void SetRect(const SDL_Rect& snipRect);
 		void SetRect(const glm::vec4& snipRect);
