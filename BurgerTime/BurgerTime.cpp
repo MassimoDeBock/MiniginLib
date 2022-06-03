@@ -7,11 +7,11 @@
 #endif
 #endif
 
-#include "Minigin.h"
+#include "Game.h"
 
 int main(int, char* []) {
-	dae::Minigin engine;
-	engine.Run();
+	Game game;
+	game.Run();
 
 	return 0;
 }
