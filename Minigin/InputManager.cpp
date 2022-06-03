@@ -20,46 +20,80 @@ struct dae::InputManager::Impl
 	}
 
 	~Impl() {
-		for (auto it : inputList) {
+		for (auto &it : inputList) {
 			delete it.second;
 		}
 	}
 	std::unordered_map<int, Input_API*> inputList;
 };
 
-void dae::InputManager::AddCommandsToController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state, Command* command)
+void dae::InputManager::AddCommandsToController(unsigned int UserNumber, ControllerButton buttonID, ButtonStates state, Command* command)
 {
-	auto search = pimpl->inputList.find(controllerNumber);
+	auto search = pimpl->inputList.find(UserNumber);
 	if (search == pimpl->inputList.end()) {
 		std::cout << "tried to add a command to a non existing controller, forgot to initialize it?" << std::endl;
 		return;
 	}
-	ControllerInput* ctrlInput = dynamic_cast<ControllerInput*>(pimpl->inputList.find(controllerNumber)->second);
+	ControllerInput* ctrlInput = dynamic_cast<ControllerInput*>(pimpl->inputList.find(UserNumber)->second);
 	if (ctrlInput == nullptr) {
-		std::cout << "tried to add a command to a non existing controller, forgot to initialize it?" << std::endl;
+		std::cout << "tried to add a command to a non existing controller, might be a keyboard?" << std::endl;
 	}
 	ctrlInput->AddCommandsToController(buttonID, state, command);
 }
 
-void dae::InputManager::SwapCommandsToController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state, Command* command)
+void dae::InputManager::SwapCommandsToController(unsigned int UserNumber, ControllerButton buttonID, ButtonStates state, Command* command)
 {
-	RemoveCommandsFromController(controllerNumber, buttonID, state);
-	AddCommandsToController(controllerNumber, buttonID, state, command);
+	RemoveCommandsFromController(UserNumber, buttonID, state);
+	AddCommandsToController(UserNumber, buttonID, state, command);
 }
 
-void dae::InputManager::RemoveCommandsFromController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state)
+void dae::InputManager::RemoveCommandsFromController(unsigned int UserNumber, ControllerButton buttonID, ButtonStates state)
 {
-	if (nullptr == pimpl->inputList.at(controllerNumber)) {
+	if (nullptr == pimpl->inputList.at(UserNumber)) {
 		std::cout << "tried to remove a command to a non existing controller, forgot to initialize it?" << std::endl;
 		return;
 	}
-	ControllerInput* ctrlInput = dynamic_cast<ControllerInput*>(pimpl->inputList.find(controllerNumber)->second);
+	ControllerInput* ctrlInput = dynamic_cast<ControllerInput*>(pimpl->inputList.find(UserNumber)->second);
 	if (ctrlInput == nullptr) {
-		std::cout << "tried to remove a command to a non existing controller, forgot to initialize it?" << std::endl;
+		std::cout << "tried to remove a command to a non existing controller, might be a keyboard?" << std::endl;
 	}
 	ctrlInput->RemoveCommandsFromController(buttonID, state);
 }
+#pragma warning(push)
+#pragma warning( disable : 26812 )
+void dae::InputManager::AddCommandsToKeyboard(unsigned int UserNumber, SDL_Scancode buttonCode, ButtonStates state, Command* command)
+{
+	auto search = pimpl->inputList.find(UserNumber);
+	if (search == pimpl->inputList.end()) {
+		std::cout << "tried to add a command to a non existing keyboard, forgot to initialize it?" << std::endl;
+		return;
+	}
+	KeyboardInput* ctrlInput = dynamic_cast<KeyboardInput*>(pimpl->inputList.find(UserNumber)->second);
+	if (ctrlInput == nullptr) {
+		std::cout << "tried to add a command to a non existing keyboard, might be a controller?" << std::endl;
+	}
+	ctrlInput->AddCommandsToKeyboard(buttonCode, state, command);
+}
 
+void dae::InputManager::SwapCommandsToKeyboard(unsigned int UserNumber, SDL_Scancode buttonCode, ButtonStates state, Command* command)
+{
+	RemoveCommandsFromKeyboard(UserNumber, buttonCode, state);
+	AddCommandsToKeyboard(UserNumber, buttonCode, state, command);
+}
+
+void dae::InputManager::RemoveCommandsFromKeyboard(unsigned int UserNumber, SDL_Scancode buttonCode, ButtonStates state)
+{
+	if (nullptr == pimpl->inputList.at(UserNumber)) {
+		std::cout << "tried to remove a command to a non existing keyboard, forgot to initialize it?" << std::endl;
+		return;
+	}
+	KeyboardInput* ctrlInput = dynamic_cast<KeyboardInput*>(pimpl->inputList.find(UserNumber)->second);
+	if (ctrlInput == nullptr) {
+		std::cout << "tried to remove a command to a non existing keyboard, might be a controller?" << std::endl;
+	}
+	ctrlInput->RemoveCommandsFromKeyboard(buttonCode, state);
+}
+#pragma warning(pop)
 
 
 dae::InputManager::InputManager()
@@ -77,24 +111,27 @@ void dae::InputManager::Initialize()
 	pimpl = std::make_unique<Impl>(Impl());
 }
 
-void dae::InputManager::AddControllerInput(unsigned int userID, unsigned int inputID)
+bool dae::InputManager::AddControllerInput(unsigned int userID, unsigned int inputID)
 {
-	if (inputID >= m_MaxUserCount) return;
-	if (userID >= m_MaxUserCount) return;
+	if (inputID >= m_MaxUserCount) return false;
+	if (userID >= m_MaxUserCount) return false;
+	if (pimpl->inputList.contains(userID)) return false;
 	pimpl->inputList.insert(std::pair<int, Input_API*>(userID, new ControllerInput(inputID)));
+	return true;
 }
 
-void dae::InputManager::AddKeyboardInput(unsigned int userID)
+bool dae::InputManager::AddKeyboardInput(unsigned int userID)
 {
-	if (userID >= m_MaxUserCount) return;
+	if (userID >= m_MaxUserCount) return false;
+	if (pimpl->inputList.contains(userID)) return false;
 	pimpl->inputList.insert(std::pair<int, Input_API*>(userID, new KeyboardInput()));
-	//pimpl->inputList.insert(std::pair<int, Input_API*>(inputID, new ControllerInput(inputID)));
+	return true;
 }
 
 
 bool dae::InputManager::ProcessInput()
 {
-
+	 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
 		switch (e.type)
@@ -136,63 +173,63 @@ void dae::InputManager::CheckConnections()
 	}
 }
 
-glm::vec2 dae::InputManager::GetControllerLeftThumbDirections(unsigned int controllerNumber) const
+glm::vec2 dae::InputManager::GetControllerLeftThumbDirections(unsigned int UserNumber) const
 {
-	auto search = pimpl->inputList.find(controllerNumber);
+	auto search = pimpl->inputList.find(UserNumber);
 	if (search == pimpl->inputList.end()) {
 		return glm::vec2(0, 0);
 	}
 	return search->second->GetControllerLeftThumbDirections();
 }
 
-glm::vec2 dae::InputManager::GetControllerRightThumbDirections(unsigned int controllerNumber) const
+glm::vec2 dae::InputManager::GetControllerRightThumbDirections(unsigned int UserNumber) const
 {
-	auto search = pimpl->inputList.find(controllerNumber);
+	auto search = pimpl->inputList.find(UserNumber);
 	if (search == pimpl->inputList.end()) {
 		return glm::vec2(0, 0);
 	}
 	return search->second->GetControllerRightThumbDirections();
 }
 
-glm::vec2 dae::InputManager::GetControllerNormalizedLeftThumbDirections(unsigned int controllerNumber) const
+glm::vec2 dae::InputManager::GetControllerNormalizedLeftThumbDirections(unsigned int UserNumber) const
 {
-	auto search = pimpl->inputList.find(controllerNumber);
+	auto search = pimpl->inputList.find(UserNumber);
 	if (search == pimpl->inputList.end()) {
 		return glm::vec2(0, 0);
 	}
 	return search->second->GetControllerNormalizedLeftThumbDirections();
 }
 
-glm::vec2 dae::InputManager::GetControllerNormalizedRightThumbDirections(unsigned int controllerNumber) const
+glm::vec2 dae::InputManager::GetControllerNormalizedRightThumbDirections(unsigned int UserNumber) const
 {
-	auto search = pimpl->inputList.find(controllerNumber);
+	auto search = pimpl->inputList.find(UserNumber);
 	if (search == pimpl->inputList.end()) {
 		return glm::vec2(0, 0);
 	}
 	return search->second->GetControllerNormalizedRightThumbDirections();
 }
 
-glm::vec2 dae::InputManager::GetControllerSingularNormalizeLeftThumbDirections(unsigned int controllerNumber) const
+glm::vec2 dae::InputManager::GetControllerSingularNormalizeLeftThumbDirections(unsigned int UserNumber) const
 {
-	auto search = pimpl->inputList.find(controllerNumber);
+	auto search = pimpl->inputList.find(UserNumber);
 	if (search == pimpl->inputList.end()) {
 		return glm::vec2(0, 0);
 	}
 	return search->second->GetControllerSingularNormalizeLeftThumbDirections();
 }
 
-glm::vec2 dae::InputManager::GetControllerSingularNormalizeRightThumbDirections(unsigned int controllerNumber) const
+glm::vec2 dae::InputManager::GetControllerSingularNormalizeRightThumbDirections(unsigned int UserNumber) const
 {
-	auto search = pimpl->inputList.find(controllerNumber);
+	auto search = pimpl->inputList.find(UserNumber);
 	if (search == pimpl->inputList.end()) {
 		return glm::vec2(0, 0);
 	}
 	return search->second->GetControllerSingularNormalizeRightThumbDirections();
 }
 
-bool dae::InputManager::IsControllerNumberConnected(unsigned int controllerNumber) const
+bool dae::InputManager::IsControllerNumberConnected(unsigned int UserNumber) const
 {
-	auto search = pimpl->inputList.find(controllerNumber);
+	auto search = pimpl->inputList.find(UserNumber);
 	if (search == pimpl->inputList.end()) {
 		return false;
 	}

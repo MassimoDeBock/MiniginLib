@@ -143,8 +143,13 @@ void dae::Minigin::LoadGame() const
 	go->SetRelativeTransform(0, 40);
 
 	{
-	//	auto& input = InputManager::GetInstance();
+		auto& input = InputManager::GetInstance();
 		//input.AddCommandsToController(0, ControllerButton::A, ButtonStates::Down, new MessageCommand(std::string("oo")));
+		//input.AddCommandsToKeyboard(0, SDL_SCANCODE_Q, ButtonStates::Pressed, new MessageCommand(std::string("Pressed")));
+		//input.AddCommandsToKeyboard(0, SDL_SCANCODE_Q, ButtonStates::Released , new MessageCommand(std::string("Released")));
+		//input.AddCommandsToKeyboard(0, SDL_SCANCODE_Q, ButtonStates::Up, new MessageCommand(std::string("Up")));
+		//input.AddCommandsToKeyboard(0, SDL_SCANCODE_Q, ButtonStates::Down, new MessageCommand(std::string("Down")));
+		input.AddCommandsToController(1, ControllerButton::A, ButtonStates::Down, new MessageCommand(std::string("oo")));
 	}
 }
 

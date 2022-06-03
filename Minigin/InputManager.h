@@ -13,23 +13,30 @@ namespace dae
 
 		void Initialize();
 
-		void AddControllerInput(unsigned int userID, unsigned int inputID);
-		void AddKeyboardInput(unsigned int userID);
+		bool AddControllerInput(unsigned int userID, unsigned int inputID);
+		bool AddKeyboardInput(unsigned int userID);
 
-		void AddCommandsToController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state, Command* command);
-		void SwapCommandsToController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state, Command* command);
-		void RemoveCommandsFromController(unsigned int controllerNumber, ControllerButton buttonID, ButtonStates state);
+		void AddCommandsToController(unsigned int UserNumber, ControllerButton buttonID, ButtonStates state, Command* command);
+		void SwapCommandsToController(unsigned int UserNumber, ControllerButton buttonID, ButtonStates state, Command* command);
+		void RemoveCommandsFromController(unsigned int UserNumber, ControllerButton buttonID, ButtonStates state);
+		
+		void AddCommandsToKeyboard(unsigned int UserNumber, SDL_Scancode buttonCode, ButtonStates state, Command* command);
+		void SwapCommandsToKeyboard(unsigned int UserNumber, SDL_Scancode buttonCode, ButtonStates state, Command* command);
+		void RemoveCommandsFromKeyboard(unsigned int UserNumber, SDL_Scancode buttonCode, ButtonStates state);
+
+
+
 
 		bool ProcessInput();
 		bool HandleInput();
 		void CheckConnections();
-		glm::vec2 GetControllerLeftThumbDirections(unsigned int controllerNumber) const;
-		glm::vec2 GetControllerRightThumbDirections(unsigned int controllerNumber) const;
-		glm::vec2 GetControllerNormalizedLeftThumbDirections(unsigned int controllerNumber) const;
-		glm::vec2 GetControllerNormalizedRightThumbDirections(unsigned int controllerNumber) const;
-		glm::vec2 GetControllerSingularNormalizeLeftThumbDirections(unsigned int controllerNumber) const;	//	only has -1, 0 or 1 in 1 direction
-		glm::vec2 GetControllerSingularNormalizeRightThumbDirections(unsigned int controllerNumber) const;	//	only has -1, 0 or 1 in 1 direction
-		bool IsControllerNumberConnected(unsigned int controllerNumber) const;
+		glm::vec2 GetControllerLeftThumbDirections(unsigned int UserNumber) const;
+		glm::vec2 GetControllerRightThumbDirections(unsigned int UserNumber) const;
+		glm::vec2 GetControllerNormalizedLeftThumbDirections(unsigned int UserNumber) const;
+		glm::vec2 GetControllerNormalizedRightThumbDirections(unsigned int UserNumber) const;
+		glm::vec2 GetControllerSingularNormalizeLeftThumbDirections(unsigned int UserNumber) const;	//	only has -1, 0 or 1 in 1 direction
+		glm::vec2 GetControllerSingularNormalizeRightThumbDirections(unsigned int UserNumber) const;	//	only has -1, 0 or 1 in 1 direction
+		bool IsControllerNumberConnected(unsigned int UserNumber) const;
 		
 		static const unsigned int m_MaxUserCount{ 4 };
 

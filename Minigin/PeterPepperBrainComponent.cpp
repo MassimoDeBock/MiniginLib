@@ -7,6 +7,10 @@
 #include "RectColliderComponent.h"
 #include "Locator.h"
 #include "AudioProvider.h"
+#include "Texture2D.h"
+#include "SpriteGroup.h"
+#include "ImagePart.h"
+#include "ResourceManager.h"
 
 dae::PeterPepperBrainComponent::PeterPepperBrainComponent(const int playerID)
 	: m_PlayerID(playerID)
@@ -21,9 +25,18 @@ void dae::PeterPepperBrainComponent::Update()
 {
 }
 
+void dae::PeterPepperBrainComponent::Render() const
+{
+	glm::vec3 rpos = m_GameObjectRef->GetAbsoluteTransform().GetPosition();
+	m_SpriteGroup.get()->GetSprite(0)->Render(rpos.x, rpos.y);
+}
+
 void dae::PeterPepperBrainComponent::OnAssign()
 {
-	m_GameObjectRef->AddComponent<TextureComponent>("TextureComponent", new TextureComponent("Peter_Pepper.png"));
+	std::string spritesheetname{ "SpriteSheetUpdated.png" };
+	m_SpriteGroup = ResourceManager::GetInstance().LoadSpriteGroup("PeterPepper");
+	m_SpriteGroup->InsertSprite(0, spritesheetname, SDL_Rect(0, 0, 32, 32));
+	//m_GameObjectRef->AddComponent<TextureComponent>("TextureComponent", new TextureComponent("Peter_Pepper.png"));
 	m_GameObjectRef->AddComponent<PeterPepperPlayerController>("PeterPepperPlayerController", new PeterPepperPlayerController(m_PlayerID));
 	m_GameObjectRef->GetComponent<MovementComponent>("MovementComponent")->SetMovementSpeed(Transform(0.5, 0.5, 0));
 

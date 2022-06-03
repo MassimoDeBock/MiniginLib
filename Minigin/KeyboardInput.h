@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.h"
 #include "Input_API.h"
+#include "ControllerButtons.h"
 
 namespace dae {
 	class KeyboardInput :
@@ -8,10 +9,15 @@ namespace dae {
 	{
 	public:
 		KeyboardInput();
+		~KeyboardInput();
+
+		void AddCommandsToKeyboard(SDL_Scancode buttonID, ButtonStates state, Command* command);
+		void OverrideCommands(SDL_Scancode buttonID, ButtonStates state, Command* command);
+		void RemoveCommandsFromKeyboard(SDL_Scancode buttonID, ButtonStates state);
 
 		virtual int GetControllerID() const;
 		virtual void ProcessInput() {};
-		virtual void HandleInput() {};
+		virtual void HandleInput();
 		virtual void CheckConnection() {};
 		virtual bool IsConnected()const { return true; };
 
@@ -27,6 +33,14 @@ namespace dae {
 		virtual glm::vec2 GetControllerSingularNormalizeLeftThumbDirections() const;	//	only has -1, 0 or 1 in 1 direction
 		virtual glm::vec2 GetControllerSingularNormalizeRightThumbDirections() const;	//	only has -1, 0 or 1 in 1 direction
 
+
+		enum FakeJoystickState {
+			PositiveY	= 0x01,
+			NegativeX	= 0x02,
+			NegativeY	= 0x04,
+			PositiveX	= 0x08,
+			IsConflict	= 0x10
+		};
 	private:
 
 		void CheckPressedCommand();

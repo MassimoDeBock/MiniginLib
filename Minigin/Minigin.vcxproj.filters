@@ -177,6 +177,12 @@
     <ClInclude Include="Achievements.h">
       <Filter>Header Files\Observers</Filter>
     </ClInclude>
+    <ClInclude Include="ImagePart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -286,6 +292,12 @@
     </ClCompile>
     <ClCompile Include="Achievements.cpp">
       <Filter>Source Files\Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="ImagePart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteGroup.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
