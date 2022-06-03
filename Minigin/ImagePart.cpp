@@ -26,11 +26,6 @@ dae::ImagePart::ImagePart(const std::string& filename, int x, int y, int w, int 
 {
 }
 
-void dae::ImagePart::flipImg()
-{
-	m_Texture.get()->GetSDLTexture();
-}
-
 void dae::ImagePart::SetTexture(const std::string& filename)
 {
 	m_Texture = ResourceManager::GetInstance().LoadTexture(filename);
@@ -73,4 +68,10 @@ void dae::ImagePart::Update()
 	SDL_RenderCopy(renderer, m_Texture.get()->GetSDLTexture(), &m_SnipRect, NULL);
 	SDL_SetRenderTarget(renderer, NULL);
 	m_TexturePart = std::make_unique<Texture2D>(result);
+}
+
+void dae::ImagePart::SetScale(float xScale, float yScale) 
+{
+	m_Scale.x = xScale;
+	m_Scale.y = yScale;
 }

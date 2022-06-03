@@ -12,7 +12,7 @@ namespace dae {
 		ImagePart(const std::string& filename, float x, float y,	float w,	float h);
 		ImagePart(const std::string& filename, int x,	int y,		int w,		int h);
 
-		void flipImg();
+		void SetScale(float xScale, float yScale);
 		void SetTexture(const std::string& filename);
 		void SetRect(const SDL_Rect& snipRect);
 		void SetRect(const glm::vec4& snipRect);
@@ -24,6 +24,7 @@ namespace dae {
 		std::shared_ptr<Texture2D> m_Texture{};
 		std::unique_ptr<Texture2D> m_TexturePart{};
 		SDL_Rect m_SnipRect{};
+		glm::vec2 m_Scale{};
 	};
 
 }
