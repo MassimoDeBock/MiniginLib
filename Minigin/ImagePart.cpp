@@ -63,6 +63,7 @@ void dae::ImagePart::Update()
 {
 	SDL_Renderer* renderer = Renderer::GetInstance().GetSDLRenderer();
 	SDL_Texture* result = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, m_SnipRect.w, m_SnipRect.h);
+	SDL_SetTextureBlendMode(result, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderTarget(renderer, result);
 	SDL_RenderCopy(renderer, m_Texture.get()->GetSDLTexture(), &m_SnipRect, NULL);
 	SDL_SetRenderTarget(renderer, NULL);
