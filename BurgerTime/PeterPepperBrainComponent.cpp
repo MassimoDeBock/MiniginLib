@@ -46,8 +46,10 @@ void dae::PeterPepperBrainComponent::OnAssign()
 	//m_GameObjectRef->AddComponent<TextureComponent>("TextureComponent", new TextureComponent("Peter_Pepper.png"));
 	m_GameObjectRef->AddComponent<PeterPepperPlayerController>("PeterPepperPlayerController", new PeterPepperPlayerController(m_PlayerID));
 
-	m_MovementComponent = std::shared_ptr<dae::MovementComponent>(m_GameObjectRef->GetComponent<MovementComponent>("MovementComponent"));
-	m_MovementComponent->SetMovementSpeed(Transform(0.5, 0.5, 0));
+	{
+		m_MovementComponent = (m_GameObjectRef->GetComponent<MovementComponent>("MovementComponent"));
+		m_MovementComponent->SetMovementSpeed(Transform(0.5, 0.5, 0));
+	}
 
 	RectColliderComponent* pTemp = new RectColliderComponent(glm::vec2(32, 32));
 	m_GameObjectRef->AddComponent<RectColliderComponent>("RectColliderComponent", pTemp);
@@ -76,19 +78,19 @@ void dae::PeterPepperBrainComponent::OnNotify(const GameObject& gameObject, Even
 void dae::PeterPepperBrainComponent::CalcDirection()
 {
 	m_isMoving = true;
-	if (m_MovementComponent.get()->GetVelocity().GetPosition().x > 0.1f) {
+	if (m_MovementComponent->GetVelocity().GetPosition().x > 0.1f) {
 		m_CurrentDirection = SpritesOrder::Right;
 		return;
 	}
-	if (m_MovementComponent.get()->GetVelocity().GetPosition().x < -0.1f) {
+	if (m_MovementComponent->GetVelocity().GetPosition().x < -0.1f) {
 		m_CurrentDirection = SpritesOrder::Left;
 		return;
 	}
-	if (m_MovementComponent.get()->GetVelocity().GetPosition().y > 0.1f) {
+	if (m_MovementComponent->GetVelocity().GetPosition().y > 0.1f) {
 		m_CurrentDirection = SpritesOrder::Down;
 		return;
 	}
-	if (m_MovementComponent.get()->GetVelocity().GetPosition().y < -0.1f) {
+	if (m_MovementComponent->GetVelocity().GetPosition().y < -0.1f) {
 		m_CurrentDirection = SpritesOrder::Up;
 		return;
 	}

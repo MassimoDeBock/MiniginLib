@@ -12,7 +12,7 @@ namespace dae {
     {
     public:
         PeterPepperBrainComponent(const int playerID);
-        virtual ~PeterPepperBrainComponent();
+        ~PeterPepperBrainComponent()override;
 
         void Update() override;
         void Render()const override;
@@ -49,7 +49,7 @@ namespace dae {
         const int m_PlayerID;
         glm::vec2 m_SpawnLocation;
 
-        std::shared_ptr<dae::MovementComponent> m_MovementComponent;
+        dae::MovementComponent* m_MovementComponent;
         std::shared_ptr<dae::SpriteGroup> m_SpriteGroup;
     };
 }
