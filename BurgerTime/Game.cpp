@@ -34,6 +34,7 @@
 #include "Locator.h"
 #include "AudioProvider.h"
 #include "LoggedAudioProvider.h"
+#include "MapComponent.h"
 
 #include <SDL_mixer.h>
 
@@ -112,6 +113,12 @@ void Game::LoadGame() const
 	go->AddComponent<dae::GameScoreBoardComponent>("GameScoreBoardComponent", new dae::GameScoreBoardComponent(2, "Peter_Pepper"));
 	go->SetParent(scene.GetGameObject("FPSDisplay"));
 	go->SetRelativeTransform(0, 40);
+
+	go = std::make_shared<dae::GameObject>();
+	scene.Add("-Map", go);
+	//go->AddComponent<MapComponent>("MapComponent", new MapComponent("../Data/Level1.txt", "SpriteSheetUpdated.png"/*"TronSpriteSheet.png"*/));
+	go->AddComponent<MapComponent>("MapComponent", new MapComponent("../Data/Level1.txt", "TronSpriteSheetUpdated.png"));
+	go->SetAbsoluteTransform(0	, 0);
 
 	{
 		auto& input = dae::InputManager::GetInstance();

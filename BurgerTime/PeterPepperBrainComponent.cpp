@@ -15,6 +15,7 @@
 
 dae::PeterPepperBrainComponent::PeterPepperBrainComponent(const int playerID)
 	: m_PlayerID(playerID)
+	, m_MovementComponent(nullptr)
 {
 }
 
@@ -107,10 +108,10 @@ void dae::PeterPepperBrainComponent::LoadSprites()
 	m_SpriteGroup = ResourceManager::GetInstance().LoadSpriteGroup("PeterPepper");
 	glm::vec2 dimensions{ 32,32 };
 	for (int i = 0; i < 3; ++i) {
-		m_SpriteGroup->InsertSprite(int(SpritesOrder::Up) +i, spritesheetname,			SDL_Rect(int(dimensions.x) * (6 + i), int(dimensions.y) * 0, int(dimensions.x), int(dimensions.y)), true);
-		m_SpriteGroup->InsertSprite(int(SpritesOrder::Left) + i, spritesheetname,		SDL_Rect(int(dimensions.x) * (3 + i), int(dimensions.y) * 0, int(dimensions.x), int(dimensions.y)), true);
-		m_SpriteGroup->InsertSprite(int(SpritesOrder::Right) + i, spritesheetname,		SDL_Rect(int(dimensions.x) * (3 + i), int(dimensions.y) * 0, int(dimensions.x), int(dimensions.y)), true);
-		m_SpriteGroup->InsertSprite(int(SpritesOrder::Down) + i, spritesheetname,		SDL_Rect(int(dimensions.x) * (0 + i), int(dimensions.y) * 0, int(dimensions.x), int(dimensions.y)), true);
+		m_SpriteGroup->InsertSprite(int(SpritesOrder::Up) + i, spritesheetname, SDL_Rect(int(dimensions.x) * (6 + i), int(dimensions.y) * 0, int(dimensions.x), int(dimensions.y)), true);
+		m_SpriteGroup->InsertSprite(int(SpritesOrder::Left) + i, spritesheetname, SDL_Rect(int(dimensions.x) * (3 + i), int(dimensions.y) * 0, int(dimensions.x), int(dimensions.y)), true);
+		m_SpriteGroup->InsertSprite(int(SpritesOrder::Right) + i, spritesheetname, SDL_Rect(int(dimensions.x) * (3 + i), int(dimensions.y) * 0, int(dimensions.x), int(dimensions.y)), true);
+		m_SpriteGroup->InsertSprite(int(SpritesOrder::Down) + i, spritesheetname, SDL_Rect(int(dimensions.x) * (0 + i), int(dimensions.y) * 0, int(dimensions.x), int(dimensions.y)), true);
 	}
 }
 

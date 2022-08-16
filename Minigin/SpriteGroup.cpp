@@ -28,10 +28,6 @@ void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, cons
 	}
 }
 
-void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, const glm::vec4& snipRect, bool mirror)
-{
-	InsertSprite(index, filename, SDL_Rect(int(snipRect.x), int(snipRect.y), int(snipRect.z), int(snipRect.w)), mirror);
-}
 
 void dae::SpriteGroup::InsertSprite(int index, const std::string& filename, float x, float y, float w, float h, bool mirror)
 {

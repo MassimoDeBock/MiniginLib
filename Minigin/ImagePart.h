@@ -1,7 +1,11 @@
 #pragma once
 
-
+#pragma warning(push, 0)
+#include <glm/glm.hpp>
+#pragma warning (pop)
+struct SDL_Rect;
 namespace dae {
+
 	class Texture2D;
 	class ImagePart
 	{
@@ -9,8 +13,8 @@ namespace dae {
 
 		ImagePart(const std::string& filename, const SDL_Rect& snipRect);
 		ImagePart(const std::string& filename, const glm::vec4& snipRect);
-		ImagePart(const std::string& filename, float x, float y,	float w,	float h);
-		ImagePart(const std::string& filename, int x,	int y,		int w,		int h);
+		ImagePart(const std::string& filename, float x, float y, float w, float h);
+		ImagePart(const std::string& filename, int x, int y, int w, int h);
 
 		void SetScale(float xScale, float yScale);
 		void SetTexture(const std::string& filename);
