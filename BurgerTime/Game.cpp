@@ -120,6 +120,9 @@ void Game::LoadGame() const
 	go->AddComponent<MapComponent>("MapComponent", new MapComponent("../Data/Level1.txt", "TronSpriteSheetUpdated.png"));
 	go->SetAbsoluteTransform(0	, 0);
 
+
+
+
 	{
 		auto& input = dae::InputManager::GetInstance();
 		//input.AddCommandsToController(0, ControllerButton::A, ButtonStates::Down, new MessageCommand(std::string("oo")));

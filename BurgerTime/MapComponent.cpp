@@ -16,7 +16,7 @@
 
 MapComponent::MapComponent(const std::string& mapPath, const std::string& spriteSheetPath)
 	: m_SpriteSheetPath(spriteSheetPath)
-{	
+{
 	ReadMap(mapPath);
 	LoadSprites();
 	CalculateDisplayTiles();
@@ -39,9 +39,15 @@ void MapComponent::Render() const
 	for (int y = 0; y < m_DisplayTile.size(); ++y) {
 		for (int x = 0; x < m_DisplayTile.at(y).size(); ++x) {
 			//m_SpriteGroup.get()->GetSprite(unsigned int(int(m_DisplayTile.at(y).at(x))))->Render(rpos.x+x* m_Dimensions.x, rpos.y + y * m_Dimensions.y);
-			m_SpriteGroup.get()->GetSprite(unsigned int(m_DisplayTile.at(y).at(x)))->Render(rpos.x+x* m_Dimensions.x, rpos.y + y * m_Dimensions.y);
+			m_SpriteGroup.get()->GetSprite(unsigned int(m_DisplayTile.at(y).at(x)))->Render(rpos.x + x * m_Dimensions.x, rpos.y + y * m_Dimensions.y);
 		}
 	}
+}
+
+glm::vec2 MapComponent::GetTileCenter(const int colX, const int rowY) const
+{
+	glm::vec3 rpos = m_GameObjectRef->GetAbsoluteTransform().GetPosition();
+	return glm::vec2(rpos.x + ((float(colX)+0.5f) * m_Dimensions.x), rpos.y + ((float(rowY) + 0.5f) * m_Dimensions.y));
 }
 
 void MapComponent::ReadMap(const std::string& path)
@@ -66,7 +72,7 @@ void MapComponent::ReadMap(const std::string& path)
 				m_Tile.push_back(std::vector<int>());
 				//std::vector<int> tempVec;
 				for (int i = 0; i < tempString.size(); ++i) {
-					m_Tile.rbegin()->push_back(int(tempString[i])-48);
+					m_Tile.rbegin()->push_back(int(tempString[i]) - 48);
 				}
 			}
 			else {
@@ -91,7 +97,7 @@ void MapComponent::ReadMap(const std::string& path)
 
 void MapComponent::CalculateDisplayTiles()
 {
-	for (int y = 0; y < m_Tile.size();++y) {
+	for (int y = 0; y < m_Tile.size(); ++y) {
 		m_DisplayTile.push_back(std::vector<int>());
 		for (int x = 0; x < m_Tile.at(y).size(); ++x) {
 			m_DisplayTile.at(y).push_back(CalcDisplayTile(x, y));
@@ -112,12 +118,12 @@ int MapComponent::CalcDisplayTile(int x, int y)
 	int currTile = m_Tile.at(int(y)).at(int(x));
 
 	if (currTile == 0) {
-	//	std::cout << "wall" << std::endl;
-		return CalcDisplayTileWall(x,y);
+		//	std::cout << "wall" << std::endl;
+		return CalcDisplayTileWall(x, y);
 	}
 	if (currTile == 1) {
-	//	std::cout << "road" << std::endl;
-		return CalcDisplayTileRoad(x,y);
+		//	std::cout << "road" << std::endl;
+		return CalcDisplayTileRoad(x, y);
 	}
 
 	return int();
@@ -126,11 +132,11 @@ int MapComponent::CalcDisplayTile(int x, int y)
 int MapComponent::CalcDisplayTileRoad(int x, int y)
 {
 
-	int value{0};
-	const int desiredValue{1};
+	int value{ 0 };
+	const int desiredValue{ 1 };
 
-	std::cout << int(GetTileValue((int(x) + 0), (int(y) + 1)))<<std::endl;
-	std::cout << m_Tile.at(y+1).at(x) <<std::endl;
+	std::cout << int(GetTileValue((int(x) + 0), (int(y) + 1))) << std::endl;
+	std::cout << m_Tile.at(y + 1).at(x) << std::endl;
 	if (int(GetTileValue(x - 1, y + 0)) == desiredValue)  value += int(DirectionValues::Left);
 	if (int(GetTileValue(x + 0, y + 1)) == desiredValue)  value += int(DirectionValues::Down);
 	if (int(GetTileValue(x + 1, y + 0)) == desiredValue)  value += int(DirectionValues::Right);
@@ -143,12 +149,35 @@ int MapComponent::CalcDisplayTileRoad(int x, int y)
 int MapComponent::CalcDisplayTileWall(int x, int y)
 {
 	int value{ 100 };
-	const int desiredValue{0};
+	const int desiredValue{ 0 };
 
 	if (int(GetTileValue(x + 1, y - 1)) == desiredValue)  value += int(DiagonalDirectionValues::RightUp);
 	if (int(GetTileValue(x + 1, y + 1)) == desiredValue)  value += int(DiagonalDirectionValues::RightDown);
 	if (int(GetTileValue(x - 1, y + 1)) == desiredValue)  value += int(DiagonalDirectionValues::LeftDown);
 	if (int(GetTileValue(x - 1, y - 1)) == desiredValue)  value += int(DiagonalDirectionValues::LeftUp);
+
+	if (value == 107) { //empty topleft
+		if (int(GetTileValue(x + 0, y - 1)) != desiredValue) value = 106; //top
+		if (int(GetTileValue(x - 1, y + 0)) != desiredValue) value = 103; //left
+	}
+	else if (value == 111) { //empty botleft
+		if (int(GetTileValue(x + 0, y + 1)) != desiredValue) value = 109; //bot
+		if (int(GetTileValue(x - 1, y + 0)) != desiredValue) value = 103; //left
+	}
+	else if (value == 113) { //empty botright
+		if (int(GetTileValue(x + 0, y + 1)) != desiredValue) value = 109; //bot
+		if (int(GetTileValue(x + 1, y + 0)) != desiredValue) value = 112; //right
+	}
+	else if (value == 114) { //empty topright
+		if (int(GetTileValue(x + 0, y - 1)) != desiredValue) value = 106; //top
+		if (int(GetTileValue(x + 1, y + 0)) != desiredValue) value = 112; //right
+	}
+	else if (value == 115) {
+		if (int(GetTileValue(x + 0, y - 1)) != desiredValue) value = 106; //top
+		if (int(GetTileValue(x + 1, y + 0)) != desiredValue) value = 112; //right
+		if (int(GetTileValue(x + 0, y + 1)) != desiredValue) value = 109; //bot
+		if (int(GetTileValue(x - 1, y + 0)) != desiredValue) value = 103; //left
+	}
 
 
 	//std::cout << int(std::byte(value)) << std::endl;
@@ -157,8 +186,8 @@ int MapComponent::CalcDisplayTileWall(int x, int y)
 
 int MapComponent::GetTileValue(int x, int y)
 {
-	if (y<0 || y>=m_Tile.size()) return 0;
-	if (x<0 || x>=m_Tile.at(int(y)).size()) return 0;
+	if (y < 0 || y >= m_Tile.size()) return 0;
+	if (x < 0 || x >= m_Tile.at(int(y)).size()) return 0;
 	//checking if below byte(0) is most likely redundant
 
 
@@ -172,7 +201,7 @@ void MapComponent::LoadSprites()
 	std::string newSpriteGroupName{ "TronSpriteSheet" };
 
 	if (dae::ResourceManager::GetInstance().IsSpriteGroupLoaded(newSpriteGroupName)) {
-		
+
 		m_SpriteGroup = dae::ResourceManager::GetInstance().LoadSpriteGroup(newSpriteGroupName);
 		return;
 	}
@@ -181,7 +210,7 @@ void MapComponent::LoadSprites()
 		m_SpriteGroup->InsertSprite(i, m_SpriteSheetPath, SDL_Rect(int(m_Dimensions.x) * i, int(m_Dimensions.y) * 0, int(m_Dimensions.x), int(m_Dimensions.y)));
 	}
 	for (int i = 100; i < 116; ++i) {
-		m_SpriteGroup->InsertSprite(i, m_SpriteSheetPath, SDL_Rect(int(m_Dimensions.x) * (i-100), int(m_Dimensions.y) * 1, int(m_Dimensions.x), int(m_Dimensions.y)));
+		m_SpriteGroup->InsertSprite(i, m_SpriteSheetPath, SDL_Rect(int(m_Dimensions.x) * (i - 100), int(m_Dimensions.y) * 1, int(m_Dimensions.x), int(m_Dimensions.y)));
 	}
 
 }

@@ -21,6 +21,7 @@ namespace dae {
 		
 		void OnAssign()override;
 		void Render()const override;
+		glm::vec2 GetTileCenter(const int colX, const int rowY)const;
 	private:
 		enum class TileTypeValues {
 			Road = 0,
