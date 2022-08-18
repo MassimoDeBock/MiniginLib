@@ -1,6 +1,7 @@
 #pragma once
 
 #pragma warning(push, 0)
+#include <SDL.h>
 #include <glm/glm.hpp>
 #pragma warning (pop)
 struct SDL_Rect;

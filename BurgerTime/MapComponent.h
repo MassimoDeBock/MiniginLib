@@ -15,14 +15,6 @@ namespace dae {
 		public dae::Component
 	{
 	public:
-		MapComponent(const std::string& path, const std::string& spriteSheetPath);
-
-		~MapComponent()override;
-		
-		void OnAssign()override;
-		void Render()const override;
-		glm::vec2 GetTileCenter(const int colX, const int rowY)const;
-	private:
 		enum class TileTypeValues {
 			Road = 0,
 			Wall = 100
@@ -40,10 +32,25 @@ namespace dae {
 			LeftUp = 8,
 		};
 
+		MapComponent(const std::string& path, const std::string& spriteSheetPath);
+
+		~MapComponent()override;
+		
+		void OnAssign()override;
+		void Render()const override;
+		glm::vec2 GetTileCenter(const int colX, const int rowY)const;
+		glm::vec3 GetActorLocation();
+		int GetDisplayValue(int colX, int rowY);
+
+		const static int spriteDimension{32};
+	private:
+
 
 
 		void ReadMap(const std::string& path);
-		glm::vec2 m_Dimensions{ 32,32 };
+
+		glm::vec2 m_Dimensions{ spriteDimension,spriteDimension };
+
 		void CalculateDisplayTiles();
 		int CalcDisplayTile(int x, int y);
 		int CalcDisplayTileRoad(int x, int y);

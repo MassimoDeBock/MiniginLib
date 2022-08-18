@@ -167,6 +167,9 @@
   <ItemGroup>
     <ClCompile Include="BasePlayerController.cpp" />
     <ClCompile Include="MapComponent.cpp" />
+    <ClCompile Include="PlayerTankComponent.cpp" />
+    <ClCompile Include="TankComponent.cpp" />
+    <ClCompile Include="TankMovementComponent.cpp" />
     <ClCompile Include="Tron.cpp" />
     <ClCompile Include="DeathBox.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -174,6 +177,7 @@
     <ClCompile Include="PeterPepperBrainComponent.cpp" />
     <ClCompile Include="PeterPepperPlayerController.cpp" />
     <ClCompile Include="PointsPickup.cpp" />
+    <ClCompile Include="TronPlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasePlayerController.h" />
@@ -183,7 +187,11 @@
     <ClInclude Include="MapComponent.h" />
     <ClInclude Include="PeterPepperBrainComponent.h" />
     <ClInclude Include="PeterPepperPlayerController.h" />
+    <ClInclude Include="PlayerTankComponent.h" />
     <ClInclude Include="PointsPickup.h" />
+    <ClInclude Include="TankComponent.h" />
+    <ClInclude Include="TankMovementComponent.h" />
+    <ClInclude Include="TronPlayerController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

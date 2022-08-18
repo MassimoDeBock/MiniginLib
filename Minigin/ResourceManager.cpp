@@ -46,7 +46,7 @@ std::shared_ptr<dae::Texture2D> dae::ResourceManager::LoadTexture(const std::str
 		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
 	}
 	std::shared_ptr<Texture2D> sharedTexture(std::make_shared<Texture2D>(texture));
-	m_TextureMap.insert(std::pair<std::string, std::weak_ptr<Texture2D>>(file,std::weak_ptr<Texture2D>(sharedTexture)));
+	m_TextureMap.insert(std::pair<std::string, std::weak_ptr<Texture2D>>(file, std::weak_ptr<Texture2D>(sharedTexture)));
 	return sharedTexture;
 }
 
@@ -64,6 +64,7 @@ std::shared_ptr<dae::SpriteGroup> dae::ResourceManager::LoadSpriteGroup(const st
 
 	return sharedSpriteGroup;
 }
+
 
 std::shared_ptr<dae::Font> dae::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 {

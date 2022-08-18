@@ -47,7 +47,18 @@ void MapComponent::Render() const
 glm::vec2 MapComponent::GetTileCenter(const int colX, const int rowY) const
 {
 	glm::vec3 rpos = m_GameObjectRef->GetAbsoluteTransform().GetPosition();
-	return glm::vec2(rpos.x + ((float(colX)+0.5f) * m_Dimensions.x), rpos.y + ((float(rowY) + 0.5f) * m_Dimensions.y));
+	return glm::vec2(rpos.x + ((float(colX) + 0.5f) * m_Dimensions.x), rpos.y + ((float(rowY) + 0.5f) * m_Dimensions.y));
+}
+
+glm::vec3 MapComponent::GetActorLocation()
+{
+	return m_GameObjectRef->GetAbsoluteTransform().GetPosition();
+}
+
+int MapComponent::GetDisplayValue(int colX, int rowY)
+{
+
+	return m_DisplayTile.at(rowY).at(colX);
 }
 
 void MapComponent::ReadMap(const std::string& path)
@@ -135,8 +146,8 @@ int MapComponent::CalcDisplayTileRoad(int x, int y)
 	int value{ 0 };
 	const int desiredValue{ 1 };
 
-	std::cout << int(GetTileValue((int(x) + 0), (int(y) + 1))) << std::endl;
-	std::cout << m_Tile.at(y + 1).at(x) << std::endl;
+	//std::cout << int(GetTileValue((int(x) + 0), (int(y) + 1))) << std::endl;
+	//std::cout << m_Tile.at(y + 1).at(x) << std::endl;
 	if (int(GetTileValue(x - 1, y + 0)) == desiredValue)  value += int(DirectionValues::Left);
 	if (int(GetTileValue(x + 0, y + 1)) == desiredValue)  value += int(DirectionValues::Down);
 	if (int(GetTileValue(x + 1, y + 0)) == desiredValue)  value += int(DirectionValues::Right);
@@ -212,5 +223,6 @@ void MapComponent::LoadSprites()
 	for (int i = 100; i < 116; ++i) {
 		m_SpriteGroup->InsertSprite(i, m_SpriteSheetPath, SDL_Rect(int(m_Dimensions.x) * (i - 100), int(m_Dimensions.y) * 1, int(m_Dimensions.x), int(m_Dimensions.y)));
 	}
+
 
 }
