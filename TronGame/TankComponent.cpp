@@ -144,6 +144,9 @@ void TankComponent::HandleEvents(dae::Event eventType, int optionalValue)
 			TakeDamage();
 		}
 		break;
+	case dae::Event::TeleportRandom:
+		RandomTeleport();
+		break;
 	default:
 		break;
 	}
@@ -160,7 +163,17 @@ void TankComponent::TakeDamage(int damage)
 
 void TankComponent::Dies()
 {
-	std::cout << "PlayerDied" << std::endl;
+	m_HP = m_MaxHP;
+	m_Subject.Notify(*m_GameObjectRef, dae::Event::UpdateHealth, m_HP);
+	m_Subject.Notify(*m_GameObjectRef, dae::Event::PlayerDied, m_HP);
+	RandomTeleport();
+}
+
+void TankComponent::RandomTeleport()
+{
+	glm::vec2 temp = m_MovementComponent->GetMapRef()->GetRandomTileOf(1);
+	m_MovementComponent->Teleport(temp);
+
 }
 
 //newSpriteGroupName = "AITanks";

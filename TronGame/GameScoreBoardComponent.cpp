@@ -25,6 +25,7 @@ void dae::GameScoreBoardComponent::OnNotify(const GameObject& gameObject, Event 
 		break;
 	case dae::Event::UpdateHealth:
 		UpdateHealth(gameObject, optionalValue);
+		break;
 	default:
 		break;
 	}
@@ -89,6 +90,10 @@ void dae::GameScoreBoardComponent::PlayerDied(const GameObject& gameObject)
 		if (m_pPlayerObjects[i] == &gameObject) {
 			--m_playerLives[i];
 			m_pLivesTextComponents[i]->SetText("Lives: " + std::to_string(m_playerLives[i]));
+		}
+		else {
+			m_playerScore[i] += 100;
+			m_pPointsTextComponents[i]->SetText("Score: " + std::to_string(m_playerScore[i]));
 		}
 	}
 }

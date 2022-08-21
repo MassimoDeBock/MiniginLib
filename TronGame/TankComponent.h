@@ -45,6 +45,7 @@ private:
     void HandleEvents(dae::Event eventType, int optionalValue = 0);
     void TakeDamage(int damage = 1);
     void Dies();
+    void RandomTeleport();
 
     std::shared_ptr<dae::Texture2D> m_BulletTexture;
 
@@ -52,6 +53,7 @@ private:
     SpritesOrder m_CurrentDirection{ SpritesOrder::Up };
 
     int m_HP{ 3 };
+    int m_MaxHP{ 3 };
     const int m_PlayerID;
     const int m_TeamID;
     TankMovementComponent* m_MovementComponent{nullptr};

@@ -77,7 +77,6 @@ void BulletHandlerComponent::HandleBulletMovement(Bullet* bullet)
 
 	if (!(m_MapRef->IsValidTile(colX, rowY))) {
 		bullet->m_Bounces = 0;
-		std::cout << "invalid" << std::endl;
 		return;
 	}
 

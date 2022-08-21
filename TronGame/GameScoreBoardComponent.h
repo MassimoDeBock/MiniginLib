@@ -27,7 +27,6 @@ namespace dae {
 		void PointsAdded(const GameObject& gameObject, const int addition);
 		void UpdateHealth(const GameObject& gameObject, const int health);
 
-		const int m_StartLives{ 3 };
 		std::string m_playerName;
 		GameObject* m_pPlayerObjects[MAX_AMOUNT_OF_PLAYERS]{ nullptr };
 		unsigned short m_PlayerAmount;

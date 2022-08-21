@@ -24,10 +24,13 @@ public:
     void FixedUpdate() override;
     void OnAssign() override;
     dae::Transform GetVelocity() const;
+    void Teleport(glm::vec2 newPos);
 
     TankMovementComponent::MoveDirection GetMoveDirection()const;
 
     void SetVelocity(const dae::Transform& newVelocity);
+    MapComponent* GetMapRef();
+    
 
 private:
     void CalcGridPos();

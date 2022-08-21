@@ -68,6 +68,28 @@ bool MapComponent::IsValidTile(int colX, int rowY)
 	return true;
 }
 
+glm::vec2 MapComponent::GetRandomTileOf(const int type)
+{
+	int xCol{ 0 }, yRow{ 0 }, temp{};
+
+
+	while (xCol==0) {
+		yRow = rand() % (m_Tile.size()-2)+1;
+		temp = rand() % (m_Tile.at(yRow).size() - 2);
+		for (int i = 0; i < m_Tile.at(yRow).size() - 2; ++i) {
+			if (m_Tile.at(yRow).at((temp + i) % (m_Tile.size() - 2) + 1) == type) {
+				xCol = (temp + i) % (m_Tile.size() - 2) + 1;
+				break;
+			}
+		}
+
+
+	}
+
+	
+	return glm::vec2(xCol,yRow);
+}
+
 void MapComponent::ReadMap(const std::string& path)
 {
 	std::ifstream levelFile;
@@ -104,12 +126,12 @@ void MapComponent::ReadMap(const std::string& path)
 	}
 	levelFile.close();
 
-	for (std::vector<int> i : m_Tile) {
-		for (int j : i) {
-			std::cout << int(j);
-		}
-		std::cout << std::endl;
-	}
+	//for (std::vector<int> i : m_Tile) {
+	//	for (int j : i) {
+	//		std::cout << int(j);
+	//	}
+	//	std::cout << std::endl;
+	//}
 }
 
 
@@ -122,13 +144,13 @@ void MapComponent::CalculateDisplayTiles()
 		}
 	}
 
-	for (std::vector<int> i : m_DisplayTile) {
-		for (int j : i) {
-			std::cout << int(j) << '|';
-		}
-		std::cout << std::endl;
-		std::cout << "======================================================" << std::endl;
-	}
+	//for (std::vector<int> i : m_DisplayTile) {
+	//	for (int j : i) {
+	//		std::cout << int(j) << '|';
+	//	}
+	//	std::cout << std::endl;
+	//	std::cout << "======================================================" << std::endl;
+	//}
 }
 
 int MapComponent::CalcDisplayTile(int x, int y)

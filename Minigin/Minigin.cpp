@@ -46,7 +46,7 @@ void dae::Minigin::Initialize()
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		1056,
+		1100,
 		864,
 		SDL_WINDOW_OPENGL
 	);

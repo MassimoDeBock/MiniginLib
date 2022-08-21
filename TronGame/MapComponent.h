@@ -44,6 +44,8 @@ public:
 	int GetTileValue(int x, int y);
 
 	bool IsValidTile(int colX, int rowY);
+	
+	glm::vec2 GetRandomTileOf(const int type);
 
 	const static int spriteDimension{ 32 };
 private:

@@ -53,6 +53,13 @@ dae::Transform TankMovementComponent::GetVelocity() const
 	return m_Velocity;
 }
 
+void TankMovementComponent::Teleport(glm::vec2 newPos)
+{
+	m_RowY = int(newPos.y);
+	m_ColX = int(newPos.x);
+	 m_CellOffset = dae::Transform{ 0,0 };
+}
+
 TankMovementComponent::MoveDirection TankMovementComponent::GetMoveDirection()const
 {
 	return m_MoveDirection;
@@ -62,6 +69,12 @@ void TankMovementComponent::SetVelocity(const dae::Transform& newVelocity)
 {
 	m_Velocity = newVelocity;
 }
+
+MapComponent* TankMovementComponent::GetMapRef()
+{
+	return m_MapRef;
+}
+
 
 void TankMovementComponent::CalcGridPos()
 {
