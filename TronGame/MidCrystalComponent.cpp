@@ -1,5 +1,4 @@
 #include "MidCrystalComponent.h"
-#include "DeathBox.h"
 #include "GameObject.h"
 #include "RectColliderComponent.h"
 #include <iostream>

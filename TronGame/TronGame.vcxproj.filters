@@ -21,9 +21,6 @@
     <ClCompile Include="BulletHandlerComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DeathBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -31,15 +28,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MapComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PeterPepperBrainComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PeterPepperPlayerController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PointsPickup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TankComponent.cpp">
@@ -65,9 +53,6 @@
     <ClInclude Include="BulletHandlerComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DeathBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -75,15 +60,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MapComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PeterPepperBrainComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PeterPepperPlayerController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PointsPickup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TankComponent.h">

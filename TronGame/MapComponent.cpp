@@ -36,8 +36,8 @@ void MapComponent::Render() const
 {
 	glm::vec3 rpos = m_GameObjectRef->GetAbsoluteTransform().GetPosition();
 	//m_SpriteGroup.get()->GetSprite(int(int(2) + 0))->Render(rpos.x, rpos.y);
-	for (int y = 0; y < m_DisplayTile.size(); ++y) {
-		for (int x = 0; x < m_DisplayTile.at(y).size(); ++x) {
+	for (int y = 0; y < int(m_DisplayTile.size()); ++y) {
+		for (int x = 0; x < int(m_DisplayTile.at(y).size()); ++x) {
 			//m_SpriteGroup.get()->GetSprite(unsigned int(int(m_DisplayTile.at(y).at(x))))->Render(rpos.x+x* m_Dimensions.x, rpos.y + y * m_Dimensions.y);
 			m_SpriteGroup.get()->GetSprite(unsigned int(m_DisplayTile.at(y).at(x)))->Render(rpos.x + x * m_Dimensions.x, rpos.y + y * m_Dimensions.y);
 		}
@@ -63,8 +63,8 @@ int MapComponent::GetDisplayValue(int colX, int rowY)
 
 bool MapComponent::IsValidTile(int colX, int rowY)
 {
-	if (!(m_DisplayTile.size() > rowY)) return false;
-	if (!(m_DisplayTile.at(rowY).size() > colX)) return false;
+	if (!(int(m_DisplayTile.size()) > rowY)) return false;
+	if (!(int(m_DisplayTile.at(rowY).size()) > colX)) return false;
 	return true;
 }
 
@@ -76,7 +76,7 @@ glm::vec2 MapComponent::GetRandomTileOf(const int type)
 	while (xCol==0) {
 		yRow = rand() % (m_Tile.size()-2)+1;
 		temp = rand() % (m_Tile.at(yRow).size() - 2);
-		for (int i = 0; i < m_Tile.at(yRow).size() - 2; ++i) {
+		for (int i = 0; i < int(m_Tile.at(yRow).size()) - 2; ++i) {
 			if (m_Tile.at(yRow).at((temp + i) % (m_Tile.size() - 2) + 1) == type) {
 				xCol = (temp + i) % (m_Tile.size() - 2) + 1;
 				break;
@@ -111,7 +111,7 @@ void MapComponent::ReadMap(const std::string& path)
 			if (tempString[0] != '}') {
 				m_Tile.push_back(std::vector<int>());
 				//std::vector<int> tempVec;
-				for (int i = 0; i < tempString.size(); ++i) {
+				for (int i = 0; i < int(tempString.size()); ++i) {
 					m_Tile.rbegin()->push_back(int(tempString[i]) - 48);
 				}
 			}
@@ -137,9 +137,9 @@ void MapComponent::ReadMap(const std::string& path)
 
 void MapComponent::CalculateDisplayTiles()
 {
-	for (int y = 0; y < m_Tile.size(); ++y) {
+	for (int y = 0; y < int(m_Tile.size()); ++y) {
 		m_DisplayTile.push_back(std::vector<int>());
-		for (int x = 0; x < m_Tile.at(y).size(); ++x) {
+		for (int x = 0; x < int(m_Tile.at(y).size()); ++x) {
 			m_DisplayTile.at(y).push_back(CalcDisplayTile(x, y));
 		}
 	}
@@ -226,8 +226,8 @@ int MapComponent::CalcDisplayTileWall(int x, int y)
 
 int MapComponent::GetTileValue(int x, int y)
 {
-	if (y < 0 || y >= m_Tile.size()) return 0;
-	if (x < 0 || x >= m_Tile.at(int(y)).size()) return 0;
+	if (y < 0 || y >= int(m_Tile.size())) return 0;
+	if (x < 0 || x >= int(m_Tile.at(int(y)).size())) return 0;
 	//checking if below byte(0) is most likely redundant
 
 
