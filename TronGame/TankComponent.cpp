@@ -44,7 +44,7 @@ void TankComponent::Render() const
 	glm::vec3 rpos = m_GameObjectRef->GetAbsoluteTransform().GetPosition();
 
 
-	m_SpriteGroup.get()->GetSprite(int(int(m_MovementComponent->GetMoveDirection())+m_SpriteVariationRow*4))->Render(rpos.x - MapComponent::spriteDimension, rpos.y - MapComponent::spriteDimension);
+	m_SpriteGroup.get()->GetSprite(int(int(m_MovementComponent->GetMoveDirection()) + m_SpriteVariationRow * 4))->Render(rpos.x - MapComponent::spriteDimension, rpos.y - MapComponent::spriteDimension);
 	//m_SpriteGroup.get()->GetSprite(0)->Render(rpos.x - MapComponent::spriteDimension, rpos.y - MapComponent::spriteDimension);
 
 }
@@ -56,11 +56,11 @@ void TankComponent::OnAssign()
 	m_MovementComponent = new TankMovementComponent(m_MoveSpeed);
 	m_GameObjectRef->AddComponent<TankMovementComponent>("TankMovementComponent", m_MovementComponent); //const float movementSpeed, std::shared_ptr<MapComponent> mapRef
 
-	m_GameObjectRef->AddComponent<TronPlayerController>("TronPlayerController", new TronPlayerController(m_PlayerID,this, m_MovementComponent));
+	m_GameObjectRef->AddComponent<TronPlayerController>("TronPlayerController", new TronPlayerController(m_PlayerID, this, m_MovementComponent));
 
 	m_BulletHandler = m_GameObjectRef->m_sceneRef->GetGameObject("_BulletHandler")->GetComponent<BulletHandlerComponent>("BulletHandlerComponent");
 
-	dae::RectColliderComponent* pTemp = new dae::RectColliderComponent(glm::vec2(64, 64),glm::vec2(-32,-32));
+	dae::RectColliderComponent* pTemp = new dae::RectColliderComponent(glm::vec2(64, 64), glm::vec2(-32, -32));
 	m_GameObjectRef->AddComponent<dae::RectColliderComponent>("RectColliderComponent", pTemp);
 	//pTemp->DoVisualise(true);
 	if (m_TeamID == 0) {
@@ -146,6 +146,7 @@ void TankComponent::HandleEvents(dae::Event eventType, int optionalValue)
 void TankComponent::TakeDamage(int damage)
 {
 	m_HP -= damage;
+	m_Subject.Notify(*m_GameObjectRef, dae::Event::UpdateHealth, m_HP);
 	if (m_HP < 1) {
 		Dies();
 	}

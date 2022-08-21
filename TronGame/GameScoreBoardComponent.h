@@ -16,6 +16,7 @@ namespace dae {
 		);
 
 		virtual void OnNotify(const GameObject& gameObject, Event event, int optionalValue = 0) override;
+		virtual void OnNotifyNoReturn(Event event, int optionalValue = 0) override;
 		void BeginPlay() override;
 
 
@@ -23,6 +24,7 @@ namespace dae {
 
 		void PlayerDied(const GameObject& gameObject);
 		void PointsAdded(const GameObject& gameObject, const int addition);
+		void UpdateHealth(const GameObject& gameObject, const int health);
 
 		const int m_StartLives{ 3 };
 		std::string m_playerName;
@@ -30,6 +32,7 @@ namespace dae {
 		unsigned short m_PlayerAmount;
 		TextComponent* m_pLivesTextComponents[MAX_AMOUNT_OF_PLAYERS]{ nullptr };
 		TextComponent* m_pPointsTextComponents[MAX_AMOUNT_OF_PLAYERS]{ nullptr };
+
 
 		int m_playerScore[MAX_AMOUNT_OF_PLAYERS]{};
 		int m_playerLives[MAX_AMOUNT_OF_PLAYERS]{};

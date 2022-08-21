@@ -1,6 +1,6 @@
 #pragma once
 #include <Component.h>
-class GameHandler :
+class MidCrystalComponent :
     public dae::Component
 {
 };

@@ -1,6 +1,6 @@
 #include "MiniginPCH.h"
 #include "GameScoreBoardComponent.h"
-#include "PeterPepperBrainComponent.h"
+#include "TankComponent.h"
 #include "ResourceManager.h"
 #include "TextComponent.h"
 #include "GameObject.h"
@@ -23,9 +23,17 @@ void dae::GameScoreBoardComponent::OnNotify(const GameObject& gameObject, Event 
 	case dae::Event::PointsObtained:
 		PointsAdded(gameObject ,optionalValue);
 		break;
+	case dae::Event::UpdateHealth:
+		UpdateHealth(gameObject, optionalValue);
 	default:
 		break;
 	}
+}
+
+void dae::GameScoreBoardComponent::OnNotifyNoReturn(Event event, int optionalValue)
+{
+	event;
+	optionalValue;
 }
 
 
@@ -34,13 +42,13 @@ void dae::GameScoreBoardComponent::BeginPlay()
 	for (unsigned short i = 0; i < m_PlayerAmount; ++i) {
 		std::string objectName = m_playerName;
 		if (i > 0) {
-			objectName += std::to_string(i);
+			objectName += std::to_string(i+1);
 		}
 		auto temp = m_GameObjectRef->m_sceneRef->GetGameObject(objectName);
 		if (temp != nullptr) {
 			m_pPlayerObjects[i] = temp;
 			m_playerLives[i] = 3;
-			temp->GetComponent<PeterPepperBrainComponent>("PeterPepperBrainComponent")->m_Subject.AddObserver(this);
+			temp->GetComponent<TankComponent>("TankComponent")->m_Subject.AddObserver(this);
 		}
 		else {
 			m_PlayerAmount = i;
@@ -72,7 +80,7 @@ void dae::GameScoreBoardComponent::BeginPlay()
 void dae::GameScoreBoardComponent::PlayerDied(const GameObject& gameObject)
 {
 	for (unsigned short i = 0; i < m_PlayerAmount; ++i) {
-		if (m_pPlayerObjects[i] != &gameObject) {
+		if (m_pPlayerObjects[i] == &gameObject) {
 			--m_playerLives[i];
 			m_pLivesTextComponents[i]->SetText("Lives: " + std::to_string(m_playerLives[i]));
 		}
@@ -82,8 +90,22 @@ void dae::GameScoreBoardComponent::PlayerDied(const GameObject& gameObject)
 void dae::GameScoreBoardComponent::PointsAdded(const GameObject& gameObject, const int addition)
 {
 	for (unsigned short i = 0; i < m_PlayerAmount; ++i) {
-		if (m_pPlayerObjects[i] != &gameObject) {
+		if (m_pPlayerObjects[i] == &gameObject) {
 			m_playerScore[i]+=addition;
+			m_pPointsTextComponents[i]->SetText("Score: " + std::to_string(m_playerScore[i]));
+		}
+	}
+}
+
+void dae::GameScoreBoardComponent::UpdateHealth(const GameObject& gameObject, const int health)
+{
+	for (unsigned short i = 0; i < m_PlayerAmount; ++i) {
+		if (m_pPlayerObjects[i] == &gameObject) {
+			--m_playerLives[i] = health;
+			m_pLivesTextComponents[i]->SetText("Health: " + std::to_string(m_playerScore[i]));
+		}
+		else {
+			m_playerScore[i] += 15;
 			m_pPointsTextComponents[i]->SetText("Score: " + std::to_string(m_playerScore[i]));
 		}
 	}

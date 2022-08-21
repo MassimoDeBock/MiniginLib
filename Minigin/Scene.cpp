@@ -16,6 +16,14 @@ void Scene::Add(const std::string & objectName, const std::shared_ptr<GameObject
 	m_GameObjects.insert(std::pair<std::string, std::shared_ptr<GameObject>>(objectName, object));
 }
 
+void Scene::Remove(const std::string & objectName)
+{
+	auto object = m_GameObjects.find(objectName);
+	if (object != m_GameObjects.end()) {
+		m_GameObjects.erase(objectName);
+	}
+}
+
 GameObject* dae::Scene::GetGameObject(const std::string & objectName)
 {
 	auto object = m_GameObjects.find(objectName);

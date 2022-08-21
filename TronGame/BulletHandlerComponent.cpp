@@ -172,7 +172,7 @@ void BulletHandlerComponent::HandleBulletMovement(Bullet* bullet)
 	switch (wallHit) //0none 1up 2right 3down 4left
 	{
 	case 0:
-		bullet->m_Position += bullet->m_MoveVelocity * bullet->m_MoveSpeed * m_TimeStep;
+		//bullet->m_Position += bullet->m_MoveVelocity * bullet->m_MoveSpeed * m_TimeStep;
 		break;
 	case 1:
 		if (m_MapRef->GetTileValue(colX, rowY - 1) == 0) {

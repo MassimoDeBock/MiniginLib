@@ -23,9 +23,9 @@
     <ClCompile Include="BulletHandlerComponent.cpp" />
     <ClCompile Include="DeathBox.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameHandler.cpp" />
     <ClCompile Include="GameScoreBoardComponent.cpp" />
     <ClCompile Include="MapComponent.cpp" />
+    <ClCompile Include="MidCrystalComponent.cpp" />
     <ClCompile Include="PeterPepperBrainComponent.cpp" />
     <ClCompile Include="PeterPepperPlayerController.cpp" />
     <ClCompile Include="PointsPickup.cpp" />
@@ -39,9 +39,9 @@
     <ClInclude Include="BulletHandlerComponent.h" />
     <ClInclude Include="DeathBox.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameHandler.h" />
     <ClInclude Include="GameScoreBoardComponent.h" />
     <ClInclude Include="MapComponent.h" />
+    <ClInclude Include="MidCrystalComponent.h" />
     <ClInclude Include="PeterPepperBrainComponent.h" />
     <ClInclude Include="PeterPepperPlayerController.h" />
     <ClInclude Include="PointsPickup.h" />
@@ -91,18 +91,22 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\sdl.props" />
+    <Import Project="..\vld.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\sdl.props" />
+    <Import Project="..\vld.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\sdl.props" />
+    <Import Project="..\vld.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\sdl.props" />
+    <Import Project="..\vld.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

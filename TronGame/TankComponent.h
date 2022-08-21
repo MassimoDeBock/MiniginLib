@@ -30,6 +30,7 @@ public:
     void OnNotify(const dae::GameObject& gameObject, dae::Event event, int optionalValue = 0);
     void OnNotifyNoReturn(dae::Event eventType, int optionalValue = 0)override;
 
+    dae::Subject m_Subject{};
 
 private:
     enum class SpritesOrder {

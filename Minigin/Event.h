@@ -6,6 +6,7 @@ namespace dae {
 		PlayerDied,
 		IsHit,
 		Hits,
-		PointsObtained
+		PointsObtained,
+		UpdateHealth
 	};
 }

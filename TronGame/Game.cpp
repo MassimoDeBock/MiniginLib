@@ -97,10 +97,6 @@ void Game::LoadGame() const
 	//	go->AddComponent<dae::PointsPickup>("PointsPickup", new dae::PointsPickup(glm::vec2(10, 10), 100));
 	//}
 
-	go = std::make_shared<dae::GameObject>();
-	scene.Add("FPSDisplay", go);
-	go->AddComponent<dae::FPSComponent>("FPSComponent", new dae::FPSComponent());
-	go->SetRelativeTransform(50, 100);
 
 
 
@@ -116,11 +112,6 @@ void Game::LoadGame() const
 	//go->AddComponent<dae::PeterPepperBrainComponent>("PeterPepperBrainComponent", new dae::PeterPepperBrainComponent(1));
 
 
-	//go = std::make_shared<dae::GameObject>();
-	//scene.Add("Scoreboard", go);
-	//go->AddComponent<dae::GameScoreBoardComponent>("GameScoreBoardComponent", new dae::GameScoreBoardComponent(2, "Peter_Pepper"));
-	//go->SetParent(scene.GetGameObject("FPSDisplay"));
-	//go->SetRelativeTransform(0, 40);
 
 	go = std::make_shared<dae::GameObject>();
 	scene.Add("-Map", go);
@@ -142,11 +133,22 @@ void Game::LoadGame() const
 	go->AddComponent<TankComponent>("TankComponent", new TankComponent(0,0,0));
 
 	go = std::make_shared<dae::GameObject>();
-	scene.Add("TankTwo", go);
+	scene.Add("Tank2", go);
 	go->SetAbsoluteTransform(32*24, 32*22);
 	go->AddComponent<TankComponent>("TankComponent", new TankComponent(1, 1, 6));
 
-	
+
+
+		go = std::make_shared<dae::GameObject>();
+	scene.Add("FPSDisplay", go);
+	go->AddComponent<dae::FPSComponent>("FPSComponent", new dae::FPSComponent());
+	go->SetRelativeTransform(934, 20);
+
+	go = std::make_shared<dae::GameObject>();
+	scene.Add("Scoreboard", go);
+	go->AddComponent<dae::GameScoreBoardComponent>("GameScoreBoardComponent", new dae::GameScoreBoardComponent(2, "Tank"));
+	go->SetParent(scene.GetGameObject("FPSDisplay"));
+	go->SetRelativeTransform(0, 40);
 
 
 	{
