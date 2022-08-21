@@ -16,6 +16,7 @@ namespace dae {
 		);
 
 		virtual void OnNotify(const GameObject& gameObject, Event event, int optionalValue = 0) override;
+		virtual void OnNotifyHitbox(const dae::GameObject& gameObject, RectColliderComponent* other, Event eventType, int optionalValue = 0) override;
 		virtual void OnNotifyNoReturn(Event event, int optionalValue = 0) override;
 		void BeginPlay() override;
 

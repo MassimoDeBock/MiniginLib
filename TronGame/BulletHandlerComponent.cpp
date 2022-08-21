@@ -122,24 +122,28 @@ void BulletHandlerComponent::HandleBulletMovement(Bullet* bullet)
 		}
 	}
 	else if ((xVelCheck == 1) && (yVelCheck == 1)) {   //multiple possible collisions		0none 1up 2right 3down 4left
-		if (offset.x < offset.y) {
+		if (abs(offset.x) < abs(offset.y)) {
 			if (abs(offset.x) <= abs(bullet->m_MoveVelocity.GetPosition().x) * bullet->m_MoveSpeed * m_TimeStep) {
 				float temp = abs(offset.x) / abs(bullet->m_MoveVelocity.GetPosition().x);
-				if ((temp * bullet->m_MoveVelocity.GetPosition().y + offset.y) > 0) {
+				if ((temp * bullet->m_MoveVelocity.GetPosition().y + offset.y) >= 0) {
 					if (m_MapRef->GetTileValue(colX, rowY + 1) == 0) wallHit = 3;
+				//	else if(m_MapRef->GetTileValue(colX, rowY - 1) == 0) wallHit = 1;
 				}
 				else {
 					if (m_MapRef->GetTileValue(colX, rowY - 1) == 0) wallHit = 1;
+					//else if (m_MapRef->GetTileValue(colX, rowY + 1) == 0) wallHit = 3;
 				}
 			}
 			if (wallHit == 0) {
 				if (abs(offset.y) <= abs(bullet->m_MoveVelocity.GetPosition().y) * bullet->m_MoveSpeed * m_TimeStep) {
 					float temp = abs(offset.y) / abs(bullet->m_MoveVelocity.GetPosition().y);
-					if (temp * bullet->m_MoveVelocity.GetPosition().x + offset.x > 0) {
+					if (temp * bullet->m_MoveVelocity.GetPosition().x + offset.x >= 0) {
 						if (m_MapRef->GetTileValue(colX + 1, rowY) == 0) wallHit = 2;
+					//	else if(m_MapRef->GetTileValue(colX - 1, rowY) == 0) wallHit = 4;
 					}
 					else {
 						if (m_MapRef->GetTileValue(colX - 1, rowY) == 0) wallHit = 4;
+					//	else if (m_MapRef->GetTileValue(colX + 1, rowY) == 0) wallHit = 2;
 					}
 				}
 			}
@@ -147,21 +151,25 @@ void BulletHandlerComponent::HandleBulletMovement(Bullet* bullet)
 		else {
 			if (abs(offset.y) <= abs(bullet->m_MoveVelocity.GetPosition().y) * bullet->m_MoveSpeed * m_TimeStep) {
 				float temp = abs(offset.y) / abs(bullet->m_MoveVelocity.GetPosition().y);
-				if (temp * bullet->m_MoveVelocity.GetPosition().x + offset.x > 0) {
+				if (temp * bullet->m_MoveVelocity.GetPosition().x + offset.x >= 0) {
 					if (m_MapRef->GetTileValue(colX + 1, rowY) == 0) wallHit = 2;
+					//else 	if (m_MapRef->GetTileValue(colX - 1, rowY) == 0) wallHit = 4;
 				}
 				else {
 					if (m_MapRef->GetTileValue(colX - 1, rowY) == 0) wallHit = 4;
+					//else if (m_MapRef->GetTileValue(colX + 1, rowY) == 0) wallHit = 2;
 				}
 			}
 			if (wallHit == 0) {
 				if (abs(offset.x) <= abs(bullet->m_MoveVelocity.GetPosition().x) * bullet->m_MoveSpeed * m_TimeStep) {
 					float temp = abs(offset.x) / abs(bullet->m_MoveVelocity.GetPosition().x);
-					if ((temp * bullet->m_MoveVelocity.GetPosition().y + offset.y) > 0) {
+					if ((temp * bullet->m_MoveVelocity.GetPosition().y + offset.y) >= 0) {
 						if (m_MapRef->GetTileValue(colX, rowY + 1) == 0) wallHit = 3;
+						//else if (m_MapRef->GetTileValue(colX, rowY - 1) == 0) wallHit = 1;
 					}
 					else {
 						if (m_MapRef->GetTileValue(colX, rowY - 1) == 0) wallHit = 1;
+						//else if (m_MapRef->GetTileValue(colX, rowY + 1) == 0) wallHit = 3;
 					}
 				}
 			}

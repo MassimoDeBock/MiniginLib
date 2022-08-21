@@ -17,8 +17,8 @@ namespace dae {
 		bool IsOverlapping(const RectColliderComponent* right);
 		bool IsOverlapping(float x, float y, float w, float h);
 
-		void Hits(const RectColliderComponent* other);
-		void IsHit(const RectColliderComponent* other);
+		void Hits(RectColliderComponent* other);
+		void IsHit(RectColliderComponent* other);
 		void IsHitNoReturn(int value = 0);
 
 		void DoVisualise(bool newIsVisualize);

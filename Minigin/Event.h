@@ -7,6 +7,7 @@ namespace dae {
 		IsHit,
 		Hits,
 		PointsObtained,
-		UpdateHealth
+		UpdateHealth,
+		TeleportRandom
 	};
 }

@@ -99,14 +99,14 @@ bool dae::RectColliderComponent::IsOverlapping(float x, float y, float w, float 
 
 
 
-void dae::RectColliderComponent::Hits(const RectColliderComponent* other)
+void dae::RectColliderComponent::Hits(RectColliderComponent* other)
 {
-	m_Subject.Notify(*other->m_GameObjectRef, Event::Hits);
+	m_Subject.Notify(*other->m_GameObjectRef,other, Event::Hits);
 }
 
-void dae::RectColliderComponent::IsHit(const RectColliderComponent* other)
+void dae::RectColliderComponent::IsHit(RectColliderComponent* other)
 {
-	m_Subject.Notify(*other->m_GameObjectRef, Event::IsHit);
+	m_Subject.Notify(*other->m_GameObjectRef,other, Event::IsHit);
 }
 
 void dae::RectColliderComponent::IsHitNoReturn(int value)

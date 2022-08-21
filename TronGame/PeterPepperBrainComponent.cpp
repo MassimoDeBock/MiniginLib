@@ -68,7 +68,8 @@ void dae::PeterPepperBrainComponent::BeginPlay()
 
 void dae::PeterPepperBrainComponent::GetPoints(const int value)
 {
-	m_Subject.Notify(*m_GameObjectRef, Event::PointsObtained, value);
+	//m_Subject.Notify(*m_GameObjectRef, Event::PointsObtained, value);
+	value;
 }
 
 void dae::PeterPepperBrainComponent::OnNotify(const GameObject& gameObject, Event eventType, int optionalValue)
@@ -136,7 +137,7 @@ void dae::PeterPepperBrainComponent::HandleEvents(const GameObject& gameObject, 
 void dae::PeterPepperBrainComponent::Hits(const GameObject& gameObject)
 {
 	if (gameObject.GetTag() == Tag::enemy) {
-		m_Subject.Notify(*m_GameObjectRef, Event::PlayerDied);
+		//m_Subject.Notify(*m_GameObjectRef, Event::PlayerDied);
 		Dies();
 	}
 }

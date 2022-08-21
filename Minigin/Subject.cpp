@@ -16,10 +16,17 @@ void dae::Subject::RemoveObserver(Observer* observer)
 	}
 }
 
-void dae::Subject::Notify(const GameObject& gameObject, Event event, const int optionalValue)
+void dae::Subject::Notify(const dae::GameObject& gameObject, RectColliderComponent* other, Event eventType, const int optionalValue)
 {
 	for (auto const& it : m_Observers) {
-		it->OnNotify(gameObject, event, optionalValue);
+		it->OnNotifyHitbox(gameObject,other, eventType, optionalValue);
+	}
+}
+
+void dae::Subject::Notify(const GameObject& other, Event event, const int optionalValue)
+{
+	for (auto const& it : m_Observers) {
+		it->OnNotify(other, event, optionalValue);
 	}
 }
 

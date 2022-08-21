@@ -37,10 +37,13 @@
 #include "MapComponent.h"
 #include "BulletHandlerComponent.h"
 
+#include "MidCrystalComponent.h"
+
 #include "TankComponent.h"
 #include <SpriteGroup.h>
 
 #include <SDL_mixer.h>
+
 
 
 void Game::LoadGame() const
@@ -71,54 +74,20 @@ void Game::LoadGame() const
 
 	auto go = std::make_shared<dae::GameObject>();
 
-	//scene.Add("--Background", go);
-	//go->AddComponent<dae::TextureComponent>("TextureComponent", new dae::TextureComponent("background.jpg"));
-
-
-
-	//go = std::make_shared<dae::GameObject>();
-	//scene.Add("-Logo", go);
-	//go->AddComponent<dae::TextureComponent>("TextureComponent", new dae::TextureComponent("logo.png"));
-	//go->AddComponent<dae::DeathBox>("DeathBox", new dae::DeathBox(glm::vec2(208, 65)));
-	//go->SetAbsoluteTransform(216, 180);
-
-
-
 	//auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	//scene.Add("-Text", go);
 	//go = std::make_shared<dae::GameObject>();
 	//go->AddComponent<dae::TextComponent>("TextComponent", new dae::TextComponent("Programming 4 Assignment", font));
 	//go->SetAbsoluteTransform(80, 20);
 
-	//for (int i = 0; i < 10; ++i) {
-	//	go = std::make_shared<dae::GameObject>();
-	//	scene.Add("PointsPickup" + std::to_string(i), go);
-	//	go->SetAbsoluteTransform(float(150 + i * 20), 100);
-	//	go->AddComponent<dae::PointsPickup>("PointsPickup", new dae::PointsPickup(glm::vec2(10, 10), 100));
-	//}
-
-
-
-
-	//go = std::make_shared<dae::GameObject>();
-	//scene.Add("Peter_Pepper", go);
-	//go->SetAbsoluteTransform(400, 400);
-	//go->AddComponent<dae::PeterPepperBrainComponent>("PeterPepperBrainComponent", new dae::PeterPepperBrainComponent(0));
-
-
-	//go = std::make_shared<dae::GameObject>();
-	//scene.Add("Peter_Pepper1", go);
-	//go->SetAbsoluteTransform(200, 400);
-	//go->AddComponent<dae::PeterPepperBrainComponent>("PeterPepperBrainComponent", new dae::PeterPepperBrainComponent(1));
-
-
+	//////////////
 
 	go = std::make_shared<dae::GameObject>();
 	scene.Add("-Map", go);
 	//go->AddComponent<MapComponent>("MapComponent", new MapComponent("../Data/Level1.txt", "SpriteSheetUpdated.png"/*"TronSpriteSheet.png"*/));
 	go->AddComponent<MapComponent>("MapComponent", new MapComponent("../Data/Level1.txt", "TronSpriteSheetUpdated.png"));
 	go->SetAbsoluteTransform(0, 0);
-	
+
 	//TankBulletsComponent::s_Map = go->GetComponent<MapComponent>("MapComponent");
 
 	go = std::make_shared<dae::GameObject>();
@@ -130,16 +99,16 @@ void Game::LoadGame() const
 	go = std::make_shared<dae::GameObject>();
 	scene.Add("Tank", go);
 	go->SetAbsoluteTransform(32, 32);
-	go->AddComponent<TankComponent>("TankComponent", new TankComponent(0,0,0));
+	go->AddComponent<TankComponent>("TankComponent", new TankComponent(0, 0, 0));
 
 	go = std::make_shared<dae::GameObject>();
 	scene.Add("Tank2", go);
-	go->SetAbsoluteTransform(32*24, 32*22);
+	go->SetAbsoluteTransform(32 * 24, 32 * 22);
 	go->AddComponent<TankComponent>("TankComponent", new TankComponent(1, 1, 6));
 
 
 
-		go = std::make_shared<dae::GameObject>();
+	go = std::make_shared<dae::GameObject>();
 	scene.Add("FPSDisplay", go);
 	go->AddComponent<dae::FPSComponent>("FPSComponent", new dae::FPSComponent());
 	go->SetRelativeTransform(934, 20);
@@ -149,6 +118,14 @@ void Game::LoadGame() const
 	go->AddComponent<dae::GameScoreBoardComponent>("GameScoreBoardComponent", new dae::GameScoreBoardComponent(2, "Tank"));
 	go->SetParent(scene.GetGameObject("FPSDisplay"));
 	go->SetRelativeTransform(0, 40);
+
+
+
+	go = std::make_shared<dae::GameObject>();
+	scene.Add("_Logo", go);
+	go->AddComponent<dae::TextureComponent>("TextureComponent", new dae::TextureComponent("MidCrystal.png", dae::Transform(-64, -64)));
+	go->AddComponent<MidCrystalComponent>("MidCrystalComponent", new MidCrystalComponent(128/4*3, 128 / 4 * 3));
+	go->SetAbsoluteTransform(464, 432);
 
 
 	{

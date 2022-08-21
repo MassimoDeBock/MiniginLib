@@ -1,6 +1,10 @@
 #pragma once
 #include "Component.h"
 #include "Observer.h"
+#pragma warning(push, 0)
+#include <glm/glm.hpp>
+#include <SDL.h>
+#pragma warning (pop)
 
 namespace dae {
 	class DeathBox :

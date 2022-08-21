@@ -27,8 +27,9 @@ public:
 
     void Shoot(dae::Transform direction);
 
-    void OnNotify(const dae::GameObject& gameObject, dae::Event event, int optionalValue = 0);
-    void OnNotifyNoReturn(dae::Event eventType, int optionalValue = 0)override;
+    virtual void OnNotify(const dae::GameObject& gameObject, dae::Event eventType, int optionalValue = 0) override;
+    virtual void OnNotifyHitbox(const dae::GameObject& gameObject, dae::RectColliderComponent* other, dae::Event eventType, int optionalValue = 0) override;
+    virtual void OnNotifyNoReturn(dae::Event eventType, int optionalValue = 0)override;
 
     dae::Subject m_Subject{};
 

@@ -98,11 +98,17 @@ void TankComponent::Shoot(dae::Transform direction)
 	}
 }
 
-void TankComponent::OnNotify(const dae::GameObject& gameObject, dae::Event tevent, int optionalValue)
+void TankComponent::OnNotify(const dae::GameObject& gameObject, dae::Event eventType, int optionalValue)
 {
 	gameObject;
 	optionalValue;
-	tevent;
+	eventType;
+}
+
+void TankComponent::OnNotifyHitbox(const dae::GameObject& gameObject, dae::RectColliderComponent* other, dae::Event eventType, int optionalValue)
+{
+	gameObject;
+	other; optionalValue; eventType;
 }
 
 void TankComponent::OnNotifyNoReturn(dae::Event eventType, int optionalValue)
