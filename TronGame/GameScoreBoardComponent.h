@@ -9,10 +9,10 @@ namespace dae {
 	{
 	public:
 		GameScoreBoardComponent(const unsigned short playerAmount, const std::string& playerName,
-			const SDL_Color& color0 = SDL_Color(100, 184, 97),
-			const SDL_Color& color1 = SDL_Color(217, 202, 87),
-			const SDL_Color& color2 = SDL_Color(217, 139, 87),
-			const SDL_Color& color3 = SDL_Color(87, 217, 189)
+			const SDL_Color& color0 = SDL_Color{ 100, 184, 97 },
+			const SDL_Color& color1 = SDL_Color{217, 202, 87},
+			const SDL_Color& color2 = SDL_Color{217, 139, 87},
+			const SDL_Color& color3 = SDL_Color{87, 217, 189}
 		);
 
 		virtual void OnNotify(const GameObject& gameObject, Event event, int optionalValue = 0) override;

@@ -70,9 +70,9 @@ void dae::PointsPickup::SetUseable(const bool newValue)
 	m_Useable = newValue;
 
 	if (m_Useable) {
-		m_pRectComponent->SetVisualizeColor(SDL_Color(m_Color.r, m_Color.g, m_Color.b));
+	//	m_pRectComponent->SetVisualizeColor(SDL_Color{ m_Color.r, m_Color.g, m_Color.b });
 	}
 	else {
-		m_pRectComponent->SetVisualizeColor(SDL_Color(m_Color.r/2, m_Color.g/2, m_Color.b/2));
+	//	m_pRectComponent->SetVisualizeColor(SDL_Color{ m_Color.r / 2, m_Color.g / 2, m_Color.b / 2 });
 	}
 }

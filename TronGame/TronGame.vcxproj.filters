@@ -15,19 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Tron.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BasePlayerController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletHandlerComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DeathBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="GameScoreBoardComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PeterPepperBrainComponent.cpp">
@@ -39,36 +45,39 @@
     <ClCompile Include="PointsPickup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MapComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TankComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TankMovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tron.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="TronPlayerController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletHandlerComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="BasePlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BasePlayerController.h">
+    <ClInclude Include="BulletHandlerComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DeathBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="GameScoreBoardComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PeterPepperBrainComponent.h">
@@ -80,9 +89,6 @@
     <ClInclude Include="PointsPickup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MapComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TankComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -90,12 +96,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TronPlayerController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletHandlerComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

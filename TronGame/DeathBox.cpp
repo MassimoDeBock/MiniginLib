@@ -18,7 +18,7 @@ void dae::DeathBox::OnAssign()
 	RectColliderComponent* rectComponent = new RectColliderComponent(m_Size);
 	m_GameObjectRef->AddComponent<RectColliderComponent>("RectColliderComponent", rectComponent);
 	rectComponent->DoVisualise(true);
-	rectComponent->SetVisualizeColor(SDL_Color(255,0,0));
+	rectComponent->SetVisualizeColor(SDL_Color{ 255,0,0 });
 
 	rectComponent->m_Subject.AddObserver(this);
 }

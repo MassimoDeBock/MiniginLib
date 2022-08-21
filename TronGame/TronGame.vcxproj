@@ -18,13 +18,43 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BasePlayerController.cpp" />
+    <ClCompile Include="BulletHandlerComponent.cpp" />
+    <ClCompile Include="DeathBox.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameHandler.cpp" />
+    <ClCompile Include="GameScoreBoardComponent.cpp" />
+    <ClCompile Include="MapComponent.cpp" />
+    <ClCompile Include="PeterPepperBrainComponent.cpp" />
+    <ClCompile Include="PeterPepperPlayerController.cpp" />
+    <ClCompile Include="PointsPickup.cpp" />
+    <ClCompile Include="TankComponent.cpp" />
+    <ClCompile Include="TankMovementComponent.cpp" />
+    <ClCompile Include="Tron.cpp" />
+    <ClCompile Include="TronPlayerController.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BasePlayerController.h" />
+    <ClInclude Include="BulletHandlerComponent.h" />
+    <ClInclude Include="DeathBox.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameHandler.h" />
+    <ClInclude Include="GameScoreBoardComponent.h" />
+    <ClInclude Include="MapComponent.h" />
+    <ClInclude Include="PeterPepperBrainComponent.h" />
+    <ClInclude Include="PeterPepperPlayerController.h" />
+    <ClInclude Include="PointsPickup.h" />
+    <ClInclude Include="TankComponent.h" />
+    <ClInclude Include="TankMovementComponent.h" />
+    <ClInclude Include="TronPlayerController.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{c2a375ad-8beb-4aae-9828-507fd4608dc9}</ProjectGuid>
-    <RootNamespace>BurgerTime</RootNamespace>
+    <ProjectGuid>{105acc44-66c4-4fdf-89da-0b4c8b794cc7}</ProjectGuid>
+    <RootNamespace>TronGame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Tron</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -75,23 +105,6 @@
     <Import Project="..\sdl.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
@@ -99,14 +112,14 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Minigin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Minigin.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,6 +131,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -126,7 +140,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Minigin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Minigin.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -136,14 +150,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Minigin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Minigin.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,6 +169,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -163,40 +178,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutputPath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Minigin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Minigin.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="BasePlayerController.cpp" />
-    <ClCompile Include="BulletHandlerComponent.cpp" />
-    <ClCompile Include="GameHandler.cpp" />
-    <ClCompile Include="MapComponent.cpp" />
-    <ClCompile Include="TankComponent.cpp" />
-    <ClCompile Include="TankMovementComponent.cpp" />
-    <ClCompile Include="Tron.cpp" />
-    <ClCompile Include="DeathBox.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameScoreBoardComponent.cpp" />
-    <ClCompile Include="PeterPepperBrainComponent.cpp" />
-    <ClCompile Include="PeterPepperPlayerController.cpp" />
-    <ClCompile Include="PointsPickup.cpp" />
-    <ClCompile Include="TronPlayerController.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BasePlayerController.h" />
-    <ClInclude Include="BulletHandlerComponent.h" />
-    <ClInclude Include="DeathBox.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameHandler.h" />
-    <ClInclude Include="GameScoreBoardComponent.h" />
-    <ClInclude Include="MapComponent.h" />
-    <ClInclude Include="PeterPepperBrainComponent.h" />
-    <ClInclude Include="PeterPepperPlayerController.h" />
-    <ClInclude Include="PointsPickup.h" />
-    <ClInclude Include="TankComponent.h" />
-    <ClInclude Include="TankMovementComponent.h" />
-    <ClInclude Include="TronPlayerController.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
