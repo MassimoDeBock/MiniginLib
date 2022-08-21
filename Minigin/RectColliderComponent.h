@@ -15,9 +15,11 @@ namespace dae {
 		virtual void BeginPlay() override;
 
 		bool IsOverlapping(const RectColliderComponent* right);
+		bool IsOverlapping(float x, float y, float w, float h);
 
 		void Hits(const RectColliderComponent* other);
 		void IsHit(const RectColliderComponent* other);
+		void IsHitNoReturn(int value = 0);
 
 		void DoVisualise(bool newIsVisualize);
 		void SetVisualizeColor(const SDL_Color& color);

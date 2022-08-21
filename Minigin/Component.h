@@ -14,6 +14,8 @@ namespace dae {
 		Component& operator=(Component&& other) = delete;
 		virtual void SetParent(GameObject* parentGameObject);
 
+		GameObject* GetGameObject();
+
 	private:
 
 

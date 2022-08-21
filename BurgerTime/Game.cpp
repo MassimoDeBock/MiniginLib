@@ -35,6 +35,7 @@
 #include "AudioProvider.h"
 #include "LoggedAudioProvider.h"
 #include "MapComponent.h"
+#include "BulletHandlerComponent.h"
 
 #include "TankComponent.h"
 #include <SpriteGroup.h>
@@ -49,6 +50,7 @@ void Game::LoadGame() const
 
 	{
 		auto& input = dae::InputManager::GetInstance();
+		//input.AddKeyboardInput(0);
 		input.AddKeyboardInput(0);
 		input.AddControllerInput(1, 0);
 	}
@@ -57,12 +59,14 @@ void Game::LoadGame() const
 		dae::Audio_API* service = new dae::AudioProvider();
 		dae::Locator::Provide(service);
 	}
-	{
-		dae::Audio_API* service = new dae::LoggedAudioProvider(dae::Locator::GetAudio()); //log audio
-		dae::Locator::Provide(service);
-	}
+	//{
+	//	dae::Audio_API* service = new dae::LoggedAudioProvider(dae::Locator::GetAudio()); //log audio
+	//	dae::Locator::Provide(service);
+	//}
 
-	dae::Locator::GetAudio().LoadSound(1, "../Data/04_Lose_Life.mp3");
+	//dae::Locator::GetAudio().LoadSound(1, "../Data/04_Lose_Life.mp3");
+	dae::Locator::GetAudio().LoadSound(1, "../Data/pew-pew-lame-sound-effect.mp3");
+	dae::Locator::GetAudio().LoadSound(2, "../Data/Woosh-Mark_DiAngelo-4778593.mp3");
 
 
 	auto go = std::make_shared<dae::GameObject>();
@@ -93,10 +97,10 @@ void Game::LoadGame() const
 	//	go->AddComponent<dae::PointsPickup>("PointsPickup", new dae::PointsPickup(glm::vec2(10, 10), 100));
 	//}
 
-	//go = std::make_shared<dae::GameObject>();
-	//scene.Add("FPSDisplay", go);
-	//go->AddComponent<dae::FPSComponent>("FPSComponent", new dae::FPSComponent());
-	//go->SetRelativeTransform(50, 100);
+	go = std::make_shared<dae::GameObject>();
+	scene.Add("FPSDisplay", go);
+	go->AddComponent<dae::FPSComponent>("FPSComponent", new dae::FPSComponent());
+	go->SetRelativeTransform(50, 100);
 
 
 
@@ -123,12 +127,26 @@ void Game::LoadGame() const
 	//go->AddComponent<MapComponent>("MapComponent", new MapComponent("../Data/Level1.txt", "SpriteSheetUpdated.png"/*"TronSpriteSheet.png"*/));
 	go->AddComponent<MapComponent>("MapComponent", new MapComponent("../Data/Level1.txt", "TronSpriteSheetUpdated.png"));
 	go->SetAbsoluteTransform(0, 0);
+	
+	//TankBulletsComponent::s_Map = go->GetComponent<MapComponent>("MapComponent");
+
+	go = std::make_shared<dae::GameObject>();
+	scene.Add("_BulletHandler", go);
+	//go->AddComponent<MapComponent>("MapComponent", new MapComponent("../Data/Level1.txt", "SpriteSheetUpdated.png"/*"TronSpriteSheet.png"*/));
+	go->AddComponent<BulletHandlerComponent>("BulletHandlerComponent", new BulletHandlerComponent());
 
 
 	go = std::make_shared<dae::GameObject>();
 	scene.Add("Tank", go);
 	go->SetAbsoluteTransform(32, 32);
-	go->AddComponent<TankComponent>("TankComponent", new TankComponent(0,0));
+	go->AddComponent<TankComponent>("TankComponent", new TankComponent(0,0,0));
+
+	go = std::make_shared<dae::GameObject>();
+	scene.Add("TankTwo", go);
+	go->SetAbsoluteTransform(32*24, 32*22);
+	go->AddComponent<TankComponent>("TankComponent", new TankComponent(1, 1, 6));
+
+	
 
 
 	{

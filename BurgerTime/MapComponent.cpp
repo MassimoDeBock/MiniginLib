@@ -61,6 +61,13 @@ int MapComponent::GetDisplayValue(int colX, int rowY)
 	return m_DisplayTile.at(rowY).at(colX);
 }
 
+bool MapComponent::IsValidTile(int colX, int rowY)
+{
+	if (!(m_DisplayTile.size() > rowY)) return false;
+	if (!(m_DisplayTile.at(rowY).size() > colX)) return false;
+	return true;
+}
+
 void MapComponent::ReadMap(const std::string& path)
 {
 	std::ifstream levelFile;

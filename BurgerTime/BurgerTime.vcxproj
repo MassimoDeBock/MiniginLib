@@ -100,6 +100,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,6 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -166,8 +168,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasePlayerController.cpp" />
+    <ClCompile Include="BulletHandlerComponent.cpp" />
+    <ClCompile Include="GameHandler.cpp" />
     <ClCompile Include="MapComponent.cpp" />
-    <ClCompile Include="PlayerTankComponent.cpp" />
     <ClCompile Include="TankComponent.cpp" />
     <ClCompile Include="TankMovementComponent.cpp" />
     <ClCompile Include="Tron.cpp" />
@@ -181,13 +184,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasePlayerController.h" />
+    <ClInclude Include="BulletHandlerComponent.h" />
     <ClInclude Include="DeathBox.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameHandler.h" />
     <ClInclude Include="GameScoreBoardComponent.h" />
     <ClInclude Include="MapComponent.h" />
     <ClInclude Include="PeterPepperBrainComponent.h" />
     <ClInclude Include="PeterPepperPlayerController.h" />
-    <ClInclude Include="PlayerTankComponent.h" />
     <ClInclude Include="PointsPickup.h" />
     <ClInclude Include="TankComponent.h" />
     <ClInclude Include="TankMovementComponent.h" />

@@ -16,7 +16,7 @@ void dae::RectColliderComponent::OnAssign()
 			m_GameObjectRef->m_sceneRef->m_CollisionManager.AddRectCollider(this);
 	}
 	else {
-		std::cout << "Make sure the RectColliderComponent Is added to a gameObject that's in a scene firt\n";
+		std::cout << "Make sure the RectColliderComponent Is added to a gameObject that's in a scene first\n";
 	}
 }
 
@@ -70,6 +70,35 @@ bool dae::RectColliderComponent::IsOverlapping(const RectColliderComponent* righ
 	return true;
 }
 
+bool dae::RectColliderComponent::IsOverlapping(float x, float y, float w, float h)
+{
+	glm::vec3 pThisLocation = this->m_GameObjectRef->GetAbsoluteTransform().GetPosition();
+	glm::vec3 pRightLocation{ x,y,0 };
+
+	glm::vec2 thisLT{ pThisLocation.x + this->m_Offset.x,
+						pThisLocation.y + this->m_Offset.y
+	};
+	glm::vec2 thisRB{ thisLT.x + this->m_Size.x,
+						thisLT.y + this->m_Size.y
+	};
+	glm::vec2 otherLT{ pRightLocation.x,
+						pRightLocation.y
+	};
+	glm::vec2 otherRB{ otherLT.x + w,
+						otherLT.y + h
+	};
+
+	if (thisLT.y > otherRB.y ||
+		thisRB.y	<	otherLT.y ||
+		thisLT.x	>	otherRB.x ||
+		thisRB.x < otherLT.x) {
+		return false;
+	}
+	return true;
+}
+
+
+
 void dae::RectColliderComponent::Hits(const RectColliderComponent* other)
 {
 	m_Subject.Notify(*other->m_GameObjectRef, Event::Hits);
@@ -78,6 +107,11 @@ void dae::RectColliderComponent::Hits(const RectColliderComponent* other)
 void dae::RectColliderComponent::IsHit(const RectColliderComponent* other)
 {
 	m_Subject.Notify(*other->m_GameObjectRef, Event::IsHit);
+}
+
+void dae::RectColliderComponent::IsHitNoReturn(int value)
+{
+	m_Subject.NotifyNoReturn(Event::IsHit, value);
 }
 
 void dae::RectColliderComponent::DoVisualise(bool newIsVisualize)

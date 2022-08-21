@@ -47,7 +47,7 @@ void dae::Minigin::Initialize()
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		960,
-		720,
+		960,
 		SDL_WINDOW_OPENGL
 	);
 	if (m_Window == nullptr)
@@ -180,7 +180,6 @@ void dae::Minigin::GameLoop()
 	sceneManager.SetFixedTimeStep(fixedTimeStep);
 	auto& input = InputManager::GetInstance();
 
-	// todo: this update loop could use some work.
 	bool doContinue = true;
 	auto lastTime = std::chrono::high_resolution_clock::now();
 	float lag = 0.0f;

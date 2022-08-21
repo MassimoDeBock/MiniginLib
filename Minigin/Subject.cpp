@@ -22,3 +22,11 @@ void dae::Subject::Notify(const GameObject& gameObject, Event event, const int o
 		it->OnNotify(gameObject, event, optionalValue);
 	}
 }
+
+void dae::Subject::NotifyNoReturn(Event event, const int optionalValue)
+{
+	for (auto const& it : m_Observers) {
+		it->OnNotifyNoReturn(event, optionalValue);
+	}
+}
+

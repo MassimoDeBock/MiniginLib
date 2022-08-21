@@ -72,7 +72,7 @@ void TankMovementComponent::CalcGridPos()
 void TankMovementComponent::RegulateMovement()
 {
 	//m_CellOffset += m_Velocity;
-	const int fixTreshHold{ MapComponent::spriteDimension*2 };
+	const int fixTreshHold{ MapComponent::spriteDimension }; //max value is spriteDimension/2, anything above means you'll move through regardless
 
 
 	if (m_Velocity.GetPosition().x > 0.3f) {

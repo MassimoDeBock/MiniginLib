@@ -161,7 +161,26 @@ glm::vec2 dae::KeyboardInput::GetControllerLeftThumbDirections() const
 
 glm::vec2 dae::KeyboardInput::GetControllerRightThumbDirections() const
 {
-	return glm::vec2();
+	SDL_Event event{};
+	glm::vec2 temp;
+	if ((pKeyboardImpl->m_RJoystickKeys[0] == event.key.keysym.sym) != (pKeyboardImpl->m_RJoystickKeys[2] == event.key.keysym.sym)) {
+		if (pKeyboardImpl->m_RJoystickKeys[0] == event.key.keysym.sym) {
+			temp.y = 1;
+		}
+		else {
+			temp.y = -1;
+		}
+	}
+	if ((pKeyboardImpl->m_RJoystickKeys[3] == event.key.keysym.sym) != (pKeyboardImpl->m_RJoystickKeys[1] == event.key.keysym.sym)) {
+		if (pKeyboardImpl->m_RJoystickKeys[3] == event.key.keysym.sym) {
+			temp.x = 1;
+		}
+		else {
+			temp.x = -1;
+		}
+	}
+
+	return temp;
 }
 
 glm::vec2 dae::KeyboardInput::GetControllerNormalizedLeftThumbDirections() const
@@ -190,7 +209,26 @@ glm::vec2 dae::KeyboardInput::GetControllerNormalizedLeftThumbDirections() const
 
 glm::vec2 dae::KeyboardInput::GetControllerNormalizedRightThumbDirections() const
 {
-	return glm::vec2();
+	const Uint8* state = SDL_GetKeyboardState(NULL);
+	glm::vec2 temp;
+	if (state[pKeyboardImpl->m_RJoystickKeys[0]] != state[pKeyboardImpl->m_RJoystickKeys[2]]) {
+		if (state[pKeyboardImpl->m_RJoystickKeys[0]]) {
+			temp.y = 1;
+		}
+		else {
+			temp.y = -1;
+		}
+	}
+	if (state[pKeyboardImpl->m_RJoystickKeys[3]] != state[pKeyboardImpl->m_RJoystickKeys[1]]) {
+		if (state[pKeyboardImpl->m_RJoystickKeys[3]]) {
+			temp.x = 1;
+		}
+		else {
+			temp.x = -1;
+		}
+	}
+
+	return temp;
 }
 
 glm::vec2 dae::KeyboardInput::GetControllerSingularNormalizeLeftThumbDirections() const
@@ -260,16 +298,15 @@ glm::vec2 dae::KeyboardInput::GetControllerSingularNormalizeLeftThumbDirections(
 glm::vec2 dae::KeyboardInput::GetControllerSingularNormalizeRightThumbDirections() const
 {
 	const Uint8* state = SDL_GetKeyboardState(NULL);
-	unsigned int input{};
+	unsigned int input{ 0 };
 	for (int i = 0; i < 4; ++i) {
 		if (state[pKeyboardImpl->m_RJoystickKeys[i]]) {
-			input = input | 2 ^ i;
+			input = input | int(pow(2.0, double(i)));
 		}
 	}
-
 	glm::vec2 temp;
-	if ((input & NegativeX) != (input & PositiveX)) {
-		if ((input & PositiveY) == (input & NegativeY)) {
+	if (bool(input & NegativeX) != bool(input & PositiveX)) {
+		if (bool(input & PositiveY) == bool(input & NegativeY)) {
 			if (input & PositiveX) {
 				temp.x = 1;
 			}
@@ -278,11 +315,29 @@ glm::vec2 dae::KeyboardInput::GetControllerSingularNormalizeRightThumbDirections
 			}
 		}
 		else {
-			input ^= pKeyboardImpl->m_RJoystickOldState;
+			input ^= pKeyboardImpl->m_LJoystickOldState;
+			switch (input)
+			{
+			case PositiveX:
+				temp.x = 1;
+				break;
+			case NegativeX:
+				temp.x = -1;
+				break;
+			case PositiveY:
+				temp.y = 1;
+				break;
+			case NegativeY:
+				temp.y = -1;
+				break;
+			default:
+				break;
+			}
+			input = input | IsConflict;
 		}
 	}
 	else {
-		if ((input & PositiveY) != (input & NegativeY)) {
+		if (bool(input & PositiveY) != bool(input & NegativeY)) {
 			if (input & PositiveY) {
 				temp.y = 1;
 			}
@@ -292,8 +347,45 @@ glm::vec2 dae::KeyboardInput::GetControllerSingularNormalizeRightThumbDirections
 		}
 	}
 
-	pKeyboardImpl->m_RJoystickOldState = input;
+	if (!bool(input & IsConflict)) {
+		pKeyboardImpl->m_RJoystickOldState = input;
+	}
 	return temp;
+	//const Uint8* state = SDL_GetKeyboardState(NULL);
+	//unsigned int input{};
+	//for (int i = 0; i < 4; ++i) {
+	//	if (state[pKeyboardImpl->m_RJoystickKeys[i]]) {
+	//		input = input | 2 ^ i;
+	//	}
+	//}
+
+	//glm::vec2 temp;
+	//if ((input & NegativeX) != (input & PositiveX)) {
+	//	if ((input & PositiveY) == (input & NegativeY)) {
+	//		if (input & PositiveX) {
+	//			temp.x = 1;
+	//		}
+	//		else {
+	//			temp.x = -1;
+	//		}
+	//	}
+	//	else {
+	//		input ^= pKeyboardImpl->m_RJoystickOldState;
+	//	}
+	//}
+	//else {
+	//	if ((input & PositiveY) != (input & NegativeY)) {
+	//		if (input & PositiveY) {
+	//			temp.y = 1;
+	//		}
+	//		else {
+	//			temp.y = -1;
+	//		}
+	//	}
+	//}
+
+	//pKeyboardImpl->m_RJoystickOldState = input;
+	//return temp;
 }
 
 
